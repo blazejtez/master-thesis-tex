@@ -9,19 +9,19 @@ Let's start with Schrödinger's time-independent equation:
 	\hat{H} \psi(x,y,z) = E \psi(x,y,z),
 \end{equation}
 where \(\hat{H}\) is a Hamiltonian operator, which in atomic units is defined as:
-	\begin{equation}
-		\hat{H} = -\frac{1}{2} \Delta + \hat{V}(x,y,z),
-	\end{equation}
-where the symbols have meaning of:
+\begin{equation}
+	\hat{H} = -\frac{1}{2} \Delta + \hat{V}(x,y,z),
+\end{equation}
+where the symbols have the meaning of:
 
 \(\Delta\) : kinetic energy operator (or Laplace operator, or Laplacian)
-		
+
 \(\hat{V}(x,y,z)\) : potential energy operator
-		
+
 \(\psi(x,y,z)\) : spatial wavefunction, representing the quantum state
-	
+
 \(E\) : energy eigenvalue associated with the state \(\psi(x,y,z)\)
-	
+
 \noindent In the case of hydrogen atom, the Hamiltonian in atomic units simplifies to:
 \begin{equation}
 	\hat{H} = -\frac{1}{2}\Delta-\frac{1}{\sqrt{x^2+y^2+z^2}}
@@ -31,7 +31,7 @@ where Laplacian in three dimensions is:
 \begin{equation}
 	\Delta = \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial z^2}
 \end{equation}
-The wavefunction is defined on the set of complex numbers and because of Born's statistical interpretation it's integral spanning the real number continuum sums to 1:
+The wavefunction is defined on the set of complex numbers, and because of Born's statistical interpretation, its integral spanning the real number continuum sums to 1:
 
 \begin{equation}
 	\boldsymbol{\psi}(x,y,z) \in \mathbb{C}
@@ -42,14 +42,14 @@ The wavefunction is defined on the set of complex numbers and because of Born's 
 
 \subsection{Sampling the wavefunction}
 
-To begin with, let's assume this system can be scaled to large enough boundaries $<-A,-A>$, containing most of wavefunction's probability density. Expected value of Hamiltonian operator becomes:
+To begin with, let's assume this system can be scaled to large enough boundaries $<-A,-A>$, containing most of the wavefunction's probability density. The expected value of the Hamiltonian operator becomes:
 \begin{equation}
 	\int_{-A}^A\int_{-A}^{A}\int_{-A}^{A}\psi^{*}(x,y,z) H \psi(x,y,z)  dx dy dz = E
 \end{equation}
 The minimal energy (the energy of the ground state) of the hydrogen atom is equal to $-\frac{1}{2}$. The spectrum of the hydrogen atom
 is degenerate, meaning that many different wavefunctions correspond to the
 same energy level. As mentioned before, the general formula for the energy of the hydrogen atom
-depending on the principal quantum number is:
+depending on the principal quantum number:
 \begin{equation}
 	E_n = -\frac{1}{2n^2}, \quad n \in \mathbb{N}
 \end{equation}
@@ -58,17 +58,17 @@ depending on the principal quantum number is:
 %% Describe how you developed the new calculation method step by step. Include derivations, algorithms, or logic used.
 
 \noindent Next, the wavefunction has to be sampled. Let us denote:
-	\begin{equation}
-		x_i = -A + id
-	\end{equation}
-	\begin{equation}
-		y_j = -A + jd
-	\end{equation}	
-	\begin{equation}
-		z_k = -A + kd
-	\end{equation}	
+\begin{equation}
+	x_i = -A + id
+\end{equation}
+\begin{equation}
+	y_j = -A + jd
+\end{equation}	
+\begin{equation}
+	z_k = -A + kd
+\end{equation}	
 where $d$ is the grid step. 
-The wavefunction is defined only at above discrete points. The sampled wavefunction can be written as:
+The wavefunction is defined only at the above discrete points. The sampled wavefunction can be written as:
 \begin{equation}
 	\psi_s(x,y,z) = \sum_{i=0}^{N-1}\sum_{j=0}^{N-1}\sum_{k=0}^{N-1}\psi(x_i,y_j,z_k)\delta(x-x_i)\delta(y-y_j)\delta(z-z_k),
 \end{equation}
@@ -77,18 +77,18 @@ Denote:
 \begin{equation}
 	\phi(x_i,y_j,z_k) = -\frac{1}{2}\Delta\psi(x,y,z)\rvert_{x=x_i,y=y_j,z=z_k}-\frac{1}{\sqrt{x_i^2+y_j^2+z_k^2}}\psi(x_i,y_j,z_k).
 \end{equation}
-Discretized expected value of the Hamiltonian is equal:
+The discretized expected value of the Hamiltonian is equal:
 \begin{equation}
 	\sum_{i=0}^{N-1}\sum_{j=0}^{N-1}\sum_{k=0}^{N-1}\psi^{*}(x_i,y_j,z_k)\phi(x_i,y_j,z_k)d^3 = E.
 \end{equation}
 
 \subsection{Laplacian}
-In order to discretize Laplace operator, three separate methods were applied, one of which was central difference scheme  on a uniform structured mesh (CDS), as well as two high-order compact (HOC) finite difference schemes.\cite{spotz1996hoc}
-Because of built-in CUDA features, such as fast read of neighboring memory addresses
+In order to discretize the Laplace operator, three separate methods were applied, one of which was a central difference scheme on a uniform structured mesh (CDS), as well as two high-order compact (HOC) finite difference schemes.\cite{spotz1996hoc}
+Because of built-in CUDA features, such as fast reading of neighboring memory addresses
 % < TODO cytowanie CUDA, akhtar>
-it is vital for them to be as compact as possible. Because of many points used, the accuracy of such stencils vary from $O(h^2)$ for 7-point stencil to up to $O(h^6)$ for 27-point stencil. Since the precision of this approximation of Laplace operator is a function of grid step, this provides further motivation to calculate with as small grid step as possible, utilizing as much of VRAM as possible.
+they need to be as compact as possible. Because of the many points used, the accuracy of such stencils varies from $O(h^2)$ for the 7-point stencil to $O(h^6)$ for the 27-point stencil. Since the precision of this approximation of the Laplace operator is a function of the grid step, this provides further motivation to calculate with as small a grid step as possible, utilizing as much VRAM as possible.
 
-For example, in case of the 7 points stencil, the discrete Laplace operator acting on a wavefunction can be written as:
+For example, in the case of the 7 points stencil, the discrete Laplace operator acting on a wavefunction can be written as:
 
 \begin{equation}
 	\begin{aligned}
@@ -99,7 +99,7 @@ For example, in case of the 7 points stencil, the discrete Laplace operator acti
 	\end{aligned}
 \end{equation}
 
-In this work three distinct stencils were utilized to calculate Laplace operator: 7-point, 19-point and 27-point. The weights of each element of the stencil are presented in Figure \ref{fig:stencils}.
+This work utilized three stencils to calculate the Laplace operator: 7-point, 19-point, and 27-point. The weights of each stencil element are presented in Figure \ref{fig:stencils}.
 The derivation of the formula for the 7-point stencil can be found in Appendix A.
 
 \begin{figure}[t]
@@ -133,7 +133,7 @@ The derivation of the formula for the 7-point stencil can be found in Appendix A
 \end{figure}
 
 
-As Krotkiewski noted in his 2013 paper, in the field of computer graphics those stencils are known as the general (non-separable) 3D convolution filters.\cite{krotkiewski2013efficient} 
+As Krotkiewski noted in his 2013 paper, those stencils are known as the general (non-separable) 3D convolution filters in computer graphics.\cite{krotkiewski2013efficient} 
 % str. 5 rownanie 4
 
 
@@ -141,7 +141,7 @@ As Krotkiewski noted in his 2013 paper, in the field of computer graphics those 
 
 \subsection{Eigensolvers}
 %TODO
-Hereafter, and for the sake of simplicity, the sampled wavefunction flattened to a vector of N \times N \times N, \textbf{x} is defined to represent $\psi(x,y,z)$. Now what is left is the method of calculating eigenvalues and eigenvectors using numerical methods. As stated before the time-independent Schr{\"o}dinger equation is:
+Hereafter, and for the sake of simplicity, the sampled wavefunction flattened to a vector of N \times N \times N, \textbf{x} is defined to represent $\psi(x,y,z)$. What is left is calculating eigenvalues and eigenvectors using numerical methods. As stated before the time-independent Schr{\"o}dinger equation is:
 
 \begin{equation}
 	\hat{H} \psi(x,y,z) = E \psi(x,y,z)
@@ -149,25 +149,25 @@ Hereafter, and for the sake of simplicity, the sampled wavefunction flattened to
 
 \noindent which is an eigenproblem,
 %TODO
-that is transformation of wavefunction by Hamiltonian results in a scaled version of it. Because of discretization Hamiltonian can be treated as a matrix, and the wavefunction becomes a vector. To solve this for $E$, both sides of equation are multipied by $\psi^T(x,y,z).$
+That is the transformation of wavefunction by Hamiltonian results in a scaled version. Because of discretization, the Hamiltonian can be treated as a matrix, and the wavefunction becomes a vector. To solve this for $E$, both sides of the equation are multiplied by $\psi^T(x,y,z).$
 
 \begin{equation}
 	\psi^T(x,y,z) \hat{H} \psi(x,y,z) = \psi^T(x,y,z) E \psi(x,y,z)
 \end{equation}
 
-\noindent denote, that $\psi^T(x,y,z)\psi(x,y,z)$ is a scalar, which means that E can be factored out on the right side
+\noindent note that $\psi^T(x,y,z)\psi(x,y,z)$ is a scalar, which means that E can be factored out on the right side
 
 \begin{equation}
 	\psi^T(x,y,z) \hat{H} \psi(x,y,z) = E(\psi^T(x,y,z) \psi(x,y,z))
 \end{equation}
 
-\noindent and both sides divided by also a scalar value of $\psi^T(x,y,z) \psi(x,y,z)$, which is a L2 norm of $\psi(x,y,z)$. After division, the equation becomes:
+\noindent and both sides divided by also a scalar value of $\psi^T(x,y,z) \psi(x,y,z)$, which is an L2 norm of $\psi(x,y,z)$. After division, the equation becomes:
 
 \begin{equation}
 	E = \frac{\psi^T(x,y,z) \hat{H} \psi(x,y,z)}{\psi^T(x,y,z) \psi(x,y,z)}
 \end{equation}
 
-\noindent which is called a Rayleigh's quotient, which is used in numerical calculations using computers since Vandergraft \cite{vandergraft1971} publication from 1971. In general the Rayleigh's quotient can be also understood as a function, which returns an eigenvalue, when given a proper eigenvector.
+\noindent that is a Rayleigh's quotient, which is used in numerical calculations using computers since Vandergraft \cite{vandergraft1971} publication from 1971. Rayleigh's quotient can also be understood as a function that returns an eigenvalue when given a proper eigenvector.
 
 \begin{equation}
 	\lambda_i = R(\textbf{x}_i)
@@ -177,20 +177,20 @@ that is transformation of wavefunction by Hamiltonian results in a scaled versio
 
 \subsubsection{Gradient descent}
 
-To solve the aforementioned quotient, iterative methods were employed. The most basic algorithm, used for such tasks is gradient descent.\cite{gradient_descent} The idea of algorithm is to have an initial guess what the eigenvector might be. If there is no such information, an uniform random vector should be used. Then, the gradient of Rayleigh's quotient should be calculated. Since the gradient points in direction where the function grows the fastest, and the algorithm tries to minimize the value, the gradient for current $\textbf{x}$ iteration is calculated and multiplied by learning rate. Thus, the next value of $\textbf{x}_{i+1}$ is:
+Iterative methods were employed to solve the aforementioned quotient. The most basic algorithm, used for such tasks is gradient descent.\cite{gradient_descent} The algorithm idea is to have an initial guess of what the eigenvector might be. If no such information exists, an uniform random vector should be used. Then, the gradient of Rayleigh's quotient should be calculated. Since the gradient points in the direction where the function grows the fastest, and the algorithm tries to minimize the value, the gradient for the current $\textbf{x}$ iteration is calculated, negated, and multiplied by the learning rate. Thus, the next value of $\textbf{x}_{i+1}$ is:
 
 \begin{equation}
 	\textbf{x}_{i+1} = \textbf{x}_{i} - lr \cdot \nabla R(\textbf{x}_{i})
 \end{equation}
 
-\noindent after which the check for convergence is made by checking if L2 norm of residue vector is bigger than assumed tolerance. Once either the convergence check is true or maximum number of iterations is achieved, the eigenvalue and eigenvector is returned by the procedure. This algorithm allows to find local minima of multivariate function.
+\noindent, after which the check for convergence is made by checking if the L2 norm of the residue vector is greater than the assumed tolerance. Once the convergence criterion is satisfied or the maximum number of iterations is achieved, the procedure returns the eigenvalue and eigenvector. This algorithm enables the identification of the local minima of multivariate functions.
 
 \subsubsection{Locally Optimal Block Preconditioned Conjugate Gradient}
 %TODO
 % Wikipedia, edit
-% Locally Optimal Block Preconditioned Conjugate Gradient (LOBPCG) is a matrix-free method for finding the largest eigenvalues and the corresponding eigenvectors of a symmetric positive definite generalized eigenvalue problem. \cite{knyazew2001} Even though it is described as matrix free, many implementations, such as one found in PyTorch demands the use of matrix operators.
+% Locally Optimal Block Preconditioned Conjugate Gradient (LOBPCG) is a matrix-free method for finding the largest eigenvalues and the corresponding eigenvectors of a symmetric positive definite generalized eigenvalue problem. \cite{knyazew2001} Even though it is described as matrix-free, many implementations, such as one found in PyTorch, demand matrix operators.
 
-It's implementations can be found in scientific modules such as SciPy \cite{scipy_lobpcg} and GPU-accelerated versions from PyTorch \cite{torch_lobpcg} and CuPyX \cite{cupy_lobpcg}.
+Its implementations can be found in scientific modules such as SciPy \cite{scipy_lobpcg} and GPU-accelerated versions from PyTorch \cite{torch_lobpcg} and CuPyX \cite{cupy_lobpcg}.
 
 \subsubsection{Steepest descent with optimal step}
 %TODO
@@ -201,7 +201,7 @@ The goal function is defined as
 	\rho\left(\mathbf{x}, \bm{\lambda} \right) = \frac{\mathbf{x}^T\mathbf{A}\mathbf{x}}{\mathbf{x}^T\mathbf{x}} + \bm{\lambda}^T \mathbf{Y}^T \mathbf{x}, 
 \end{equation}
 where $\mathbf{Y}\in\mathbb{R}^{d \times k}$ contains orthogonal vectors defining the subspace orthogonal to the sought solution and $\bm{\lambda}\in\mathbb{R}^k$ is the vector of Lagrange multipliers.
-Thus the gradients read
+Thus, the gradients read
 \begin{equation}
 	\nabla_{\mathbf{x}}\rho\left(\mathbf{x},\bm{\lambda}\right) = \frac{2}{\mathbf{x}^T\mathbf{x}}\left(\mathbf{A}-\frac{\mathbf{x}^T\mathbf{A}\mathbf{x}}{\mathbf{x}^T\mathbf{x}}\right)\mathbf{x} + \mathbf{Y}\bm{\lambda},
 \end{equation}
@@ -238,7 +238,7 @@ where the coefficients are:
 	q_5 &= 2 c_2^2 c_3.
 \end{align*}
 
-which allows to calculate the optimal step size.
+which facilitates the calculation of the optimal step size.
 
 \subsubsection{Adam}
 %TODO
@@ -261,28 +261,28 @@ which allows to calculate the optimal step size.
 
 \subsubsection{CuPy}
 
-CuPy provides functionality of NumPy and SciPy modules, offering GPU-accelerated computing with Python. It works both on Nvidia CUDA as well as AMD ROCm platforms. It's API is compatible with aforementioned modules.\cite{cupy_overview}
+CuPy provides the functionality of NumPy and SciPy modules, offering GPU-accelerated computing with Python. It works on both Nvidia CUDA and AMD ROCm platforms. Its API is compatible with the aforementioned modules.\cite{cupy_overview}
 
-CuPy also provides easy way of implementing custom kernel functions. For example - taken from "Learn CUDA":\cite{learn_cuda}
+CuPy also provides an easy way of implementing custom kernel functions. For example - taken from "Learn CUDA":\cite{learn_cuda}
 
 \vspace{0.2cm}
 \lstinputlisting[caption=Simple element-wise kernel, label=listing1, captionpos=b]{listings/3/listing1.py}
 takes two arguments, x and y and the return value is stored in the variable z.
 
-Also it is possible to use raw kernel functions. Raw kernels are used when one wants to define custom kernel, that executes CUDA source code. Using raw kernels allows to control grid size, block size, shared memory size and stream. An example of raw kernel from CuPy docs\cite{cupy_raw_kernel}:
+Also it is possible to use raw kernel functions. Raw kernels are used when one wants to define a custom kernel that executes CUDA source code. Using raw kernels allows for control of grid size, block size, shared memory size, and stream. An example of the raw kernel from CuPy docs\cite{cupy_raw_kernel}:
 
 \vspace{0.2cm}
 \lstinputlisting[caption=Example code of raw kernel that performs addition of two 2D arrays., label=listing2, captionpos=b]{listings/3/listing2.py}
 
-Moreover, CuPy provided the TextureObject\cite{cupy_texture} and SurfaceObject\cite{cupy_surface}, which allowed to pass the CUDA textures and surfaces into the raw kernel. Relevance of this will be addressed in more depth in the next section. Also, the LOBPCG implementation from this module was used.\cite{cupy_lobpcg}
+Moreover, CuPy provided the TextureObject\cite{cupy_texture} and SurfaceObject\cite{cupy_surface}, allowing the CUDA textures and surfaces to be passed into the raw kernel. The relevance of this will be addressed in more depth in the next section. Also, the LOBPCG implementation from this module was used.\cite{cupy_lobpcg}
 
 
 \subsubsection{CUDA}
 
-In this work, we meet the case of data parallelism\cite{cheng2014professional}, that is a situation where calculation time might benefit when many data items are operated at the same time. The CUDA approach for such problems is to provide to each thread equal parts of data, so that every thread can work on it's part simultaneously.
+In this work, we meet the case of data parallelism\cite{cheng2014professional}, which is a situation where calculation time might benefit when many data items are operated at the same time. The CUDA approach for such problems is to provide each thread with equal parts of data so that every thread can work on its part simultaneously.
 
-Important issue with parallel computation is the 
-Raw kernels were written using technique described by Akhtar et al.\cite{akhtar2018efficient}. and Krotkiewski \cite{krotkiewski2013efficient}
+An important issue with parallel computation is the 
+Raw kernels were written using the technique described by Akhtar et al.\cite{akhtar2018efficient}. and Krotkiewski \cite{krotkiewski2013efficient}
 
 
 % TODO opisać texturę i surface i guess
