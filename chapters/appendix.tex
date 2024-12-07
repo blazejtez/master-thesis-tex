@@ -1,0 +1,313 @@
+\section{Appendices}
+
+\subsection{Detailed proofs}
+\subsubsection{7-point stencil}
+Derivation begins with the Laplace operator:
+\begin{equation}
+	\Delta = \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial z^2}
+\end{equation}
+The derivative can be approximated as a difference quotient of:
+\begin{equation}
+	\frac{df(x)}{dx} \approx \frac{f(x)-f(x-h)}{h}
+\end{equation}
+as well as a difference quotient from the other side:
+\begin{equation}
+	\frac{df(x+h)}{dx} \approx \frac{f(x+h)-f(x)}{h}
+\end{equation}
+where h is a grid spacing.
+To calculate the second derivative we use formula 3:
+\begin{equation}
+	\frac{d^2f(x)}{dx^2} = \frac{df(x)}{dx} \frac{df(x)}{dx} = \frac{d}{dx} \frac{f(x+h)-f(x)}{h}
+\end{equation}
+
+\begin{equation}
+	\frac{d}{dx} \frac{f(x+h)-f(x)}{h} = \frac{1}{h} \frac{d}{dx}(f(x+h)-f(x)) = \frac{1}{h} (\frac{df(x+h)}{dx} - \frac{df(x)}{dx})
+\end{equation}
+
+\noindent And thus we can substitute into equation formulas 2 and 3:
+\begin{equation}
+	\frac{d^2f(x)}{dx^2} = \frac{1}{h} (\frac{f(x+h)-f(x)}{h} - \frac{f(x)-f(x-h)}{h}) = \frac{1}{h^2} (f(x+h)-f(x)-(f(x)-f(x-h))) 
+\end{equation}
+\begin{equation}
+	= \frac{1}{h^2} (f(x+h)-f(x)-f(x)+f(x-h)) = \frac{1}{h^2} (f(x+h)+f(x-h)-2f(x))
+\end{equation}
+Calculations for y and z will be similar. As long as h is the same in any dimension, we can substitute this into formula 1:
+\begin{equation}
+	\Delta = \frac{1}{h^2} (f(x+h)+f(x-h)-2f(x)) + \frac{1}{h^2} (f(y+h)+f(y-h)-2f(y)) + \frac{1}{h^2} (f(z+h)+f(z-h)-2f(z))
+\end{equation}
+\begin{equation}
+	\Delta = \frac{1}{h^2} (f(x+h)+f(x-h)-2f(x) + f(y+h)+f(y-h)-2f(y) + f(z+h)+f(z-h)-2f(z))
+\end{equation}
+For point in space f(x,y,z), we derive 7-point stencil:
+
+\begin{equation}
+	\begin{aligned}
+		\Delta = \frac{1}{h^2} \Big( 
+		& f(x+h, y, z) + f(x-h, y, z) + f(x, y+h, z) \\
+		& + f(x, y-h, z) + f(x, y, z+h) + f(x, y, z-h) \\
+		& - 6f(x, y, z) 
+		\Big)
+	\end{aligned}
+\end{equation}
+
+\subsubsection{Integrating the expectation value of the potential energy operator}
+\begin{equation}
+	\int_{-\infty}^{+\infty} \int_{-\infty}^{+\infty} \int_{-\infty}^{+\infty} 
+	x^k y^l z^m e^{-p (x^2+y^2+z^2)} \frac{1}{\sqrt{x^2+y^2+z^2}} x^k y^l z^m e^{-p(x^2+y^2+z^2)}
+	dx dy dz
+\end{equation}
+
+
+\begin{align*} 
+	r^2 &=  x^2+y^2+z^2 \\ 
+	r &=  \sqrt{x^2+y^2+z^2} \\
+	x &= r \sin{\theta} \cos{\phi} \\
+	y &= r \sin{\theta} \sin{\phi} \\
+	z &= r \cos{\theta} \\
+	J &= r^2 \sin{\theta}
+\end{align*}
+
+\begin{multline}
+	\int_{0}^{+\infty} \int_{0}^{2\pi} \int_{0}^{\pi} 
+	(r \sin{\theta} \cos{\phi})^k
+	(r \sin{\theta} \sin{\phi})^l
+	(r \cos{\theta})^m 
+	e^{-p r^2}
+	\\
+	(r \sin{\theta} \cos{\phi})^k
+	(r \sin{\theta} \sin{\phi})^l
+	(r \cos{\theta})^m
+	e^{-p r^2} 
+	\frac{1}{r}
+	r^2 \sin{\theta}
+	d\phi d\theta d r
+\end{multline}
+
+\begin{equation}
+	\int_{0}^{+\infty} \int_{0}^{2\pi} \int_{0}^{\pi} 
+	(r \sin{\theta} \cos{\phi})^{2k}
+	(r \sin{\theta} \sin{\phi})^{2l}
+	(r \cos{\theta})^{2m}
+	e^{-2p r^2} 
+	r \sin{\theta}
+	d\phi d\theta d r
+\end{equation}
+
+Rozbijam wyrażenie podcałkowe na 3 funkcje:
+
+
+\begin{equation}
+	(r \sin{\theta} \cos{\phi})^{2k}
+	(r \sin{\theta} \sin{\phi})^{2l}
+	(r \cos{\theta})^{2m}
+	e^{-2p r^2} 
+	r \sin{\theta}
+\end{equation}
+
+\begin{equation}
+	r^{2k} \sin^{2k}{\theta} \cos^{2k}{\phi} 
+	r^{2l} \sin^{2l}{\theta}  \sin^{2l}{\phi} 
+	r^{2m} \cos^{2m}{\theta} 
+	e^{-2p r^2} 
+	r \sin{\theta}
+\end{equation}
+
+\begin{equation}
+	(r^{2k} r^{2l} r^{2m} e^{-2p r^2} r)
+	(\sin^{2k}{\theta}\sin^{2l}{\theta} \cos^{2m}{\theta}  \sin{\theta} )
+	(\cos^{2k}{\phi}   \sin^{2l}{\phi} )
+\end{equation}
+
+\begin{equation}
+	(r^{2(k+l+m)+1} e^{-2p r^2})
+	(\sin^{2(k+l)+1}{\theta}\cos^{2m}{\theta})
+	(\cos^{2k}{\phi}   \sin^{2l}{\phi} )
+\end{equation}
+Stąd:
+\begin{equation}
+	\int_{0}^{+\infty} r^{2(k+l+m)+1} e^{-2p r^2} d r
+	\int_{0}^{2\pi} \sin^{2(k+l)+1}{\theta}\cos^{2m}{\theta} d\theta
+	\int_{0}^{\pi} \cos^{2k}{\phi}   \sin^{2l}{\phi} d\phi
+\end{equation}
+
+\begin{multline}
+	\frac{\Gamma \left(k+\frac{1}{2}\right) \Gamma \left(l+\frac{1}{2}\right) \Gamma \left(m+\frac{1}{2}\right) 2^{-k-l-m-2} p^{-k-l-m-1} \Gamma (k+l+m+1)}{\Gamma\left(k+l+m+\frac{3}{2}\right)} \\
+\end{multline}
+
+\subsubsection{Integrating the expectation value of the kinetic energy operator}
+\begin{equation}
+	\int_{-\infty}^{+\infty} \int_{-\infty}^{+\infty} \int_{-\infty}^{+\infty} 
+	x^k y^l z^m e^{-p (x^2+y^2+z^2)} \Delta x^k y^l z^m e^{-p(x^2+y^2+z^2)}
+	dx dy dz
+\end{equation}
+
+Uprośćmy wyrażenie podcałkowe:
+\begin{equation}
+	x^k y^l z^m e^{-p (x^2+y^2+z^2)} \Delta x^k y^l z^m e^{-p(x^2+y^2+z^2)}
+\end{equation}
+
+\begin{equation}
+	(\frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial z^2})x^k y^l z^m e^{-p(x^2+y^2+z^2)}
+\end{equation}
+
+Rozbijam to na trzy wyrazy:
+\begin{equation}
+	\frac{\partial^2}{\partial x^2} x^k y^l z^m e^{-p(x^2+y^2+z^2)}
+\end{equation}
+
+\begin{equation}
+	\frac{\partial^2}{\partial y^2} x^k y^l z^m e^{-p(x^2+y^2+z^2)}
+\end{equation}
+
+\begin{equation}
+	\frac{\partial^2}{\partial z^2} x^k y^l z^m e^{-p(x^2+y^2+z^2)}
+\end{equation}
+
+A następnie liczę pierwszą podwójnej pochodną cząstkową:
+
+\begin{equation}
+	\frac{\partial^2}{\partial x} x^k y^l z^m e^{-p(x^2+y^2+z^2)}
+\end{equation}
+
+\begin{equation}
+	y^l z^m \frac{\partial^2}{\partial x^2} x^k e^{-p(x^2+y^2+z^2)}
+\end{equation}
+
+\begin{equation}
+	y^l z^m \frac{\partial^2}{\partial x^2} x^k e^{-px^2-py^2-pz^2}
+\end{equation}
+
+\begin{equation}
+	y^l z^m \frac{\partial^2}{\partial x^2} x^k e^{-px^2}e^{-py^2}e^{-pz^2}
+\end{equation}
+
+\begin{equation}
+	y^l z^m e^{-py^2}e^{-pz^2} \frac{\partial^2}{\partial x} x^k e^{-px^2}
+\end{equation}
+
+Wynik pierwszej podwójnej pochodnej cząstkowej:
+
+\begin{equation}
+	\frac{\partial^2\phi(x,y,z)}{\partial x^2} = y^l z^m e^{-py^2}e^{-pz^2}  \left(x^k (4 p^2 x^2 e^{-p x^2}-2 p e^{-p x^2})+(k-1) k x^{k-2} e^{-p x^2}-4 k p x^k e^{-p x^2}\right)
+\end{equation}
+
+Analogicznie dla drugiej podwójnej pochodnej cząstkowej otrzymujemy:
+
+\begin{equation}
+	x^k z^m e^{-px^2}e^{-pz^2} \frac{\partial^2}{\partial y^2} y^l e^{-py^2}
+\end{equation}
+
+Wynik drugiej podwójnej pochodnej cząstkowej:
+
+\begin{equation}
+	\frac{\partial^2\psi(y)}{\partial y^2} =  x^k z^m e^{-px^2}e^{-pz^2} \left( z^m (4 p^2 z^2 e^{-p z^2}-2 p e^{-p z^2})+(m-1) m z^{m-2} e^{-p z^2}-4 m p z^m e^{-p z^2} \right)
+\end{equation}
+
+Dla trzeciej:
+\begin{equation}
+	x^k y^l e^{-px^2}e^{-py^2} \frac{\partial^2}{\partial z^2} z^m e^{-pz^2}
+\end{equation}
+
+Wynik:
+\begin{equation}
+	\frac{\partial^2\psi(z)}{\partial z^2} = x^k y^l e^{-px^2}e^{-py^2} \left( y^l (4 p^2 y^2 e^{-p y^2}-2 p e^{-p y^2})+(l-1) l y^{l-2} e^{-p y^2}-4 l p y^l e^{-p y^2}\right)
+\end{equation}
+
+Dzięki temu działaniu, całkę możemy rozbić na sumę trzech całek.
+
+\begin{equation}
+	I_1 = \psi \frac{\partial^2\psi(x,y,z)}{\partial x^2}
+\end{equation}
+\begin{equation}
+	I_2 = \psi \frac{\partial^2\psi(x,y,z)}{\partial y^2}
+\end{equation}
+\begin{equation}
+	I_3 = \psi \frac{\partial^2\psi(x,y,z)}{\partial z^2}
+\end{equation}
+
+Każda z nich była obliczana w analogiczny sposób:
+
+\begin{equation}
+	I_1 = \psi x^k y^l z^m e^{-2p(x^2+y^2+z^2)} y^l z^m e^{-py^2}e^{-pz^2} \frac{\partial^2\psi(x)}{\partial x^2}
+\end{equation}
+
+\begin{equation}
+	I_1 = x^k y^l z^m e^{-2p(x^2+y^2+z^2)} \frac{\partial^2\psi(x)}{\partial x^2}
+\end{equation}
+
+\fbox{$2^{-4 k-2 m-11} \Gamma \left(k-\frac{1}{2}\right) p^{-2 k-m-\frac{1}{2}} \left((1-4 k) \Gamma \left(k+\frac{1}{2}\right) \Gamma \left(m+\frac{1}{2}\right)-4^{k-l} (k (8 m-3)-3 m+1) \Gamma \left(l+\frac{1}{2}\right) \Gamma \left(m-\frac{1}{2}\right) p^{k-l}\right)\text{ if }\Re(k)>\frac{1}{2}\land l^*+l>-1\land \Re(m)>\frac{1}{2}\land \Re(p)>0$}
+
+
+\subsubsection{Optimization of the normalization factor}
+%TODO TODO
+%TODO TODO
+The GTO basis function is equal:
+\begin{equation}
+	\text{GTO} = x^k y^l z^m e^{(-p(x^2 + y^2 + z^2))}
+\end{equation}
+Specific case: $k = l = m = 0$
+\begin{equation}
+	\text{GTO}_0 = e^{(-p(x^2 + y^2 + z^2))}
+\end{equation}
+Substituting
+\begin{equation}
+	\text{GTO}_{0r} = e^{(-pr^2)}
+\end{equation}
+Multiplying times the Jacobian
+\begin{equation}
+	\text{GTO}_{0rj} = \exp(-pr^2) r^2 \sin(\theta)
+\end{equation}
+Separating radial part
+\begin{equation}
+	\text{GTO}_{0rj,\text{radial}} = \exp(-pr^2) r^2
+\end{equation}
+Computing integral of the radial part
+\begin{equation}
+	\int_0^\infty \frac{\exp(-pr^2) r^2}{r} \, dr = \frac{1}{4p}
+\end{equation}
+Computing integral of the sine of \Theta
+\begin{equation}
+	\int_0^\pi \sin(\theta) \, d\theta \int_0^{2\pi} d\phi = 4\pi
+\end{equation}
+Getting potential part of the expected value of the Hamiltonian
+\begin{equation}
+	\text{Potential Integral} = - \frac{\pi}{p}
+\end{equation}
+Some auxiliary computations
+\begin{equation}
+	\text{Kinetic Integrals} = 
+	\left\{
+	-\sqrt{p} \sqrt{\frac{\pi}{2}}, 
+	-\sqrt{p} \sqrt{\frac{\pi}{2}}, 
+	-\sqrt{p} \sqrt{\frac{\pi}{2}}
+	\right\}
+\end{equation}
+
+\begin{equation}
+	\text{Kinetic Energy Integral} = 
+	\frac{3 \pi^{3/2}}{4 \sqrt{2} \sqrt{p}}
+\end{equation}
+
+\begin{equation}
+	\text{Norm Integral} = \frac{\pi^{3/2}}{2 \sqrt{2} p^{3/2}}
+\end{equation}
+
+\begin{equation}
+	\text{Rayleigh Quotient} = \frac{\text{Kinetic Integral} + \text{Potential Integral}}{\text{Norm Integral}}
+\end{equation}
+
+\begin{equation}
+	\text{Minimizer of } p: p = \frac{8}{9\pi}
+\end{equation}
+
+\begin{equation}
+	\text{Minimal Rayleigh Quotient Value: } -\frac{4}{3\pi}
+\end{equation}
+
+\begin{equation}
+	\text{Potential Part of Rayleigh Quotient: } -2\sqrt{p} \sqrt{\frac{2}{\pi}}
+\end{equation}
+
+\begin{equation}
+	\text{Kinetic Part of Rayleigh Quotient: } \frac{3 \pi^{3/2}}{4 \sqrt{2} \sqrt{p}}
+\end{equation}

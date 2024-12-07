@@ -1,0 +1,1109 @@
+This is LuaHBTeX, Version 1.17.1 (MiKTeX 24.1) (format=lualatex 2024.10.21)  6 DEC 2024 02:36
+ restricted system commands enabled.
+**2.tex
+(./2.tex
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-04>
+Lua module: luaotfload 2023-08-31 3.26 Lua based OpenType font support
+Lua module: lualibs 2023-07-13 2.76 ConTeXt Lua standard libraries.
+Lua module: lualibs-extended 2023-07-13 2.76 ConTeXt Lua libraries -- extended c
+ollection.
+luaotfload | conf : Root cache directory is "C:/Users/Blazej/AppData/Local/MiKTe
+X/luatex-cache/generic/names".
+luaotfload | init : Loading fontloader "fontloader-2023-08-19.lua" from kpse-res
+olved path "C:/Users/Blazej/AppData/Local/Programs/MiKTeX/tex/luatex/luaotfload/
+fontloader-2023-08-19.lua".
+Lua-only attribute luaotfload@noligature = 1
+luaotfload | init : Context OpenType loader version 3.133
+Inserting `luaotfload.node_processor' in `pre_linebreak_filter'.
+Inserting `luaotfload.node_processor' in `hpack_filter'.
+Inserting `luaotfload.glyph_stream' in `glyph_stream_provider'.
+Inserting `luaotfload.define_font' in `define_font'.
+Lua-only attribute luaotfload_color_attribute = 2
+luaotfload | conf : Root cache directory is "C:/Users/Blazej/AppData/Local/MiKTe
+X/luatex-cache/generic/names".
+Inserting `luaotfload.harf.strip_prefix' in `find_opentype_file'.
+Inserting `luaotfload.harf.strip_prefix' in `find_truetype_file'.
+Removing  `luaotfload.glyph_stream' from `glyph_stream_provider'.
+Inserting `luaotfload.harf.glyphstream' in `glyph_stream_provider'.
+Inserting `luaotfload.harf.finalize_vlist' in `post_linebreak_filter'.
+Inserting `luaotfload.harf.finalize_hlist' in `hpack_filter'.
+Inserting `luaotfload.cleanup_files' in `wrapup_run'.
+Inserting `luaotfload.harf.finalize_unicode' in `finish_pdffile'.
+Inserting `luaotfload.glyphinfo' in `glyph_info'.
+Lua-only attribute luaotfload.letterspace_done = 3
+Inserting `luaotfload.aux.set_sscale_dimens' in `luaotfload.patch_font'.
+Inserting `luaotfload.aux.set_font_index' in `luaotfload.patch_font'.
+Inserting `luaotfload.aux.patch_cambria_domh' in `luaotfload.patch_font'.
+Inserting `luaotfload.aux.fixup_fontdata' in `luaotfload.patch_font_unsafe'.
+Inserting `luaotfload.aux.set_capheight' in `luaotfload.patch_font'.
+Inserting `luaotfload.aux.set_xheight' in `luaotfload.patch_font'.
+Inserting `luaotfload.rewrite_fontname' in `luaotfload.patch_font'.
+Inserting `tracingstacklevels' in `input_level_string'.
+! Undefined control sequence.
+l.1 \section
+          {EXISTING WAYS TO SOLVE SCHRÖDINGER EQUATION FOR HYDROGEN ATOM}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1 \section{E
+            XISTING WAYS TO SOLVE SCHRÖDINGER EQUATION FOR HYDROGEN ATOM}
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 1--2
+[]EXISTING
+ []
+
+! Undefined control sequence.
+l.3 \subsection
+             {Analytical Solution}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3 \subsection{A
+               nalytical Solution}
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 3--4
+[]Analytical
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.5 T
+   he number of exact solutions is largely limited, due to exponentially inc...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 5--7
+[]The
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.8 P
+   roviding an analytical solution offers the opportunity to verify the accu...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+luaotfload | db : Font names database loaded from C:/Users/Blazej/AppData/Local/
+MiKTeX/luatex-cache/generic/names/luaotfload-names.luc.gz
+Overfull \hbox (20.0pt too wide) in paragraph at lines 8--9
+[]Providing
+ []
+
+
+Overfull \hbox (27.34999pt too wide) in paragraph at lines 8--9
+\TU/lmr/m/it/10 Quan-
+ []
+
+
+Overfull \hbox (16.87pt too wide) in paragraph at lines 8--9
+\TU/lmr/m/it/10 tum
+ []
+
+
+Overfull \hbox (28.63pt too wide) in paragraph at lines 8--9
+\TU/lmr/m/it/10 Chem-
+ []
+
+
+Overfull \hbox (19.56001pt too wide) in paragraph at lines 8--9
+\TU/lmr/m/it/10 istry\nullfont . 
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.10 A
+     key outcome of these derivations is the set of hydrogen-like real wavef...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+\citation{kolos1978}
+! Undefined control sequence.
+<write> ... Warning: Citation `\@citeb ' on page \thepage 
+                                                  \space undefined\on@line .
+l.10 ...ogen-like real wavefunctions\cite{kolos1978}
+                                                  . These include the follow...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: Citation `kolos1978' on page  undefined on input line 10.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 10--11
+[]A
+ []
+
+
+Overfull \hbox (5.43pt too wide) in paragraph at lines 10--11
+wavefunctions[[]].
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.12 \begin{equation}
+                   
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 12--12
+[] 
+ []
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 12.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 12.
+
+! LaTeX Error: Environment aligned undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.13 	\begin{aligned}
+                   
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+! Misplaced alignment tab character &.
+l.14 		&
+       1s = N_{1s}e^{\frac{-Zr}{a_0}} \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+<recently read> &
+ 
+l.15 		&
+       2s = N_{2s}e^{\frac{-Zr}{2a_0}}(2 - \frac{Zr}{a_0}) \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+<recently read> &
+ 
+l.16 		&
+       2p_x =  N_{2p}e^{\frac{-Zr}{2a_0}}x \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+<recently read> &
+ 
+l.17 		&
+       2p_y =  N_{2p}e^{\frac{-Zr}{2a_0}}y \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+<recently read> &
+ 
+l.18 		&
+       2p_z =  N_{2p}e^{\frac{-Zr}{2a_0}}z \\		
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+<recently read> &
+ 
+l.19 		&
+       3s = N_{3s}e^{\frac{-Zr}{3a_0}}(27 - 18\frac{Zr}{a_0} + 2\frac{Z^2r^2...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+<recently read> &
+ 
+l.20 		&
+       3p_x =  N_{3p}e^{\frac{-Zr}{3a_0}}(6-\frac{Zr}{a_0})x \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+<recently read> &
+ 
+l.21 		&
+       3p_y =  N_{3p}e^{\frac{-Zr}{3a_0}}(6-\frac{Zr}{a_0})y \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+<recently read> &
+ 
+l.22 		&
+       3p_z =  N_{3p}e^{\frac{-Zr}{3a_0}}(6-\frac{Zr}{a_0})z \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+<recently read> &
+ 
+l.23 		&
+       3d_{3z^2-r^2} =  N_{3d}e^{\frac{-Zr}{3a_0}}(3z^2-r^2) \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+<recently read> &
+ 
+l.24 		&
+       3d_{xy} =  2\sqrt{3}N_{3d}e^{\frac{-Zr}{3a_0}}xy \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+<recently read> &
+ 
+l.25 		&
+       3d_{xz} =  2\sqrt{3}N_{3d}e^{\frac{-Zr}{3a_0}}xz \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+<recently read> &
+ 
+l.26 		&
+       3d_{yz} =  2\sqrt{3}N_{3d}e^{\frac{-Zr}{3a_0}}yz \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+<recently read> &
+ 
+l.27 		&
+       3d_{x^2=y^2} =  \sqrt{3}N_{3d}e^{\frac{-Zr}{3a_0}}(x^2-y^2) \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+
+! LaTeX Error: \begin{equation} on input line 12 ended by \end{aligned}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.28 	\end{aligned}
+                 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Overfull \hbox (1402.51463pt too wide) detected at line 29
+\OT1/cmr/m/n/10 1\OML/cmm/m/it/10 s \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 N[]e[][]
+ \OT1/cmr/m/n/10 2\OML/cmm/m/it/10 s \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 N[]e[]\
+OT1/cmr/m/n/10 (2 \OMS/cmsy/m/n/10 ^^@ []\OT1/cmr/m/n/10 )[] 2\OML/cmm/m/it/10 
+p[] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 N[]e[]x[] \OT1/cmr/m/n/10 2\OML/cmm/m/it
+/10 p[] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 N[]e[]y[] \OT1/cmr/m/n/10 2\OML/cmm/
+m/it/10 p[] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 N[]e[]z[] \OT1/cmr/m/n/10 3\OML/
+cmm/m/it/10 s \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 N[]e[]\OT1/cmr/m/n/10 (27 \OMS
+/cmsy/m/n/10 ^^@ \OT1/cmr/m/n/10 18[] + 2[])[] 3\OML/cmm/m/it/10 p[] \OT1/cmr/m
+/n/10 = \OML/cmm/m/it/10 N[]e[]\OT1/cmr/m/n/10 (6 \OMS/cmsy/m/n/10 ^^@ []\OT1/c
+mr/m/n/10 )\OML/cmm/m/it/10 x[] \OT1/cmr/m/n/10 3\OML/cmm/m/it/10 p[] \OT1/cmr/
+m/n/10 = \OML/cmm/m/it/10 N[]e[]\OT1/cmr/m/n/10 (6 \OMS/cmsy/m/n/10 ^^@ []\OT1/
+cmr/m/n/10 )\OML/cmm/m/it/10 y[] \OT1/cmr/m/n/10 3\OML/cmm/m/it/10 p[] \OT1/cmr
+/m/n/10 = \OML/cmm/m/it/10 N[]e[]\OT1/cmr/m/n/10 (6 \OMS/cmsy/m/n/10 ^^@ []\OT1
+/cmr/m/n/10 )\OML/cmm/m/it/10 z[] \OT1/cmr/m/n/10 3\OML/cmm/m/it/10 d[] \OT1/cm
+r/m/n/10 = \OML/cmm/m/it/10 N[]e[]\OT1/cmr/m/n/10 (3\OML/cmm/m/it/10 z[] \OMS/c
+msy/m/n/10 ^^@ \OML/cmm/m/it/10 r[]\OT1/cmr/m/n/10 )[] 3\OML/cmm/m/it/10 d[] \O
+T1/cmr/m/n/10 = 2[]\OML/cmm/m/it/10 N[]e[]xy[] \OT1/cmr/m/n/10 3\OML/cmm/m/it/1
+0 d[] \OT1/cmr/m/n/10 = 2[]\OML/cmm/m/it/10 N[]e[]xz[] \OT1/cmr/m/n/10 3\OML/cm
+m/m/it/10 d[] \OT1/cmr/m/n/10 = 2[]\OML/cmm/m/it/10 N[]e[]yz[] \OT1/cmr/m/n/10 
+3\OML/cmm/m/it/10 d[] \OT1/cmr/m/n/10 = []\OML/cmm/m/it/10 N[]e[]\OT1/cmr/m/n/1
+0 (\OML/cmm/m/it/10 x[] \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 y[]\OT1/cmr/m/n/1
+0 )[] 
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.31 \noindent
+             where
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.33 \(
+     N_{1s}, N_{2s}... \) : normalization constants for specific orbital
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (65.3681pt too wide) in paragraph at lines 33--34
+[]$\OML/cmm/m/it/10 N[]; N[]:::$
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.35 \(
+     a_0 \) : Bohr radius
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (29.77202pt too wide) in paragraph at lines 35--36
+[]$\OML/cmm/m/it/10 a[]$
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.37 \(
+     Z \) : the number of protons in the nucleus, in the case of hydrogen at...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (27.54167pt too wide) in paragraph at lines 37--38
+[]$\OML/cmm/m/it/10 Z$
+ []
+
+
+Overfull \hbox (7.54167pt too wide) in paragraph at lines 37--38
+\OML/cmm/m/it/10 Z$
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.39 \(
+     e \) : Euler's constant
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (24.65627pt too wide) in paragraph at lines 39--40
+[]$\OML/cmm/m/it/10 e$
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.41 \(
+     x,y,z \) : the distances from the origin of the coordinate system along...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (44.956pt too wide) in paragraph at lines 41--42
+[]$\OML/cmm/m/it/10 x; y; z$
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.43 \(
+     r \) : the distance from the origin of the coordinate system
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (24.78937pt too wide) in paragraph at lines 43--44
+[]$\OML/cmm/m/it/10 r$
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.45 T
+    hese functions, when discretized, provide a good initial guess for numer...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 45--46
+[]These
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.47 \begin{equation}
+                   
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 47--47
+[] 
+ []
+
+! Undefined control sequence.
+l.48 	E_n = -\frac{1}{2n^2}, \quad n \in \mathbb
+                                              {N}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (83.61862pt too wide) detected at line 49
+\OML/cmm/m/it/10 E[] \OT1/cmr/m/n/10 = \OMS/cmsy/m/n/10 ^^@[]\OML/cmm/m/it/10 ; n \OMS/cmsy/m/n/10 2 \OML/cmm/m/it/10 N
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.51 \noindent
+             offers a benchmark for expected energy values, enabling quantit...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.53 A
+    nalytical solutions are limited to simple systems such as free particles...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 53--54
+[]Analytical
+ []
+
+! Undefined control sequence.
+l.55 \subsection
+              {Variational Method}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.55 \subsection{V
+                ariational Method}
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 55--58
+[]Variational
+ []
+
+
+Overfull \hbox (11.86807pt too wide) in paragraph at lines 55--58
+\OML/cmm/m/it/10 E[]$\nullfont .
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.59 \begin{equation}
+                   
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 59--59
+[] 
+ []
+
+! Undefined control sequence.
+l.60 	\langle E \rangle \geqslant
+                                E_1
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (27.60419pt too wide) detected at line 61
+\OMS/cmsy/m/n/10 h\OML/cmm/m/it/10 E\OMS/cmsy/m/n/10 i\OML/cmm/m/it/10 E[]
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.63 \noindent
+             where $E_1$ is the true ground state energy. These functions ar...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (11.86807pt too wide) in paragraph at lines 63--64
+\OML/cmm/m/it/10 E[]$
+ []
+
+
+Overfull \hbox (27.34pt too wide) in paragraph at lines 63--64
+\TU/lmr/m/it/10 ansatz
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.65 A
+     variational method was created based on the variational principle. By s...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 65--66
+[]A
+ []
+
+
+Overfull \hbox (23.6994pt too wide) in paragraph at lines 65--66
+\OML/cmm/m/it/10  []$\nullfont ,
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.67 \begin{equation}
+                    E_{\text{approx}} = \frac{\langle \psi_{\text{trial}} | ...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 67--67
+[] 
+ []
+
+! Undefined control sequence.
+l.67 \begin{equation} E_{\text
+                            {approx}} = \frac{\langle \psi_{\text{trial}} | ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> \langle \psi _{\text 
+                     {trial}} | \hat {H} | \psi _{\text {trial}} \rangle 
+l.67 ...\text{trial}} | \psi_{\text{trial}} \rangle}
+                                                  . \end{equation}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> ...psi _{\text {trial}} | \hat {H} | \psi _{\text 
+                                                  {trial}} \rangle 
+l.67 ...\text{trial}} | \psi_{\text{trial}} \rangle}
+                                                  . \end{equation}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> \langle \psi _{\text 
+                     {trial}} | \psi _{\text {trial}} \rangle 
+l.67 ...\text{trial}} | \psi_{\text{trial}} \rangle}
+                                                  . \end{equation}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+<argument> \langle \psi _{\text {trial}} | \psi _{\text 
+                                             {trial}} \rangle 
+l.67 ...\text{trial}} | \psi_{\text{trial}} \rangle}
+                                                  . \end{equation}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (121.24263pt too wide) detected at line 67
+\OML/cmm/m/it/10 E[] \OT1/cmr/m/n/10 = []\OML/cmm/m/it/10 :
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.69 S
+    ince the $\psi_{trial}$ comprises of variables \textbf{x} and parameters...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+\citation{IzaacWang2018ComputationalQM}
+! Undefined control sequence.
+<write> ... Warning: Citation `\@citeb ' on page \thepage 
+                                                  \space undefined\on@line .
+l.69 ...for which\cite{IzaacWang2018ComputationalQM}
+                                                  :
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: Citation `IzaacWang2018ComputationalQM' on page  undefined on in
+put line 69.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 69--70
+[]Since
+ []
+
+
+Overfull \hbox (23.6994pt too wide) in paragraph at lines 69--70
+\OML/cmm/m/it/10  []$
+ []
+
+
+Overfull \hbox (6.07pt too wide) in paragraph at lines 69--70
+\TU/lmr/bx/n/10 x
+ []
+
+
+Overfull \hbox (5.11pt too wide) in paragraph at lines 69--70
+\TU/lmr/bx/n/10 c\nullfont ,
+ []
+
+
+Overfull \hbox (7.95831pt too wide) in paragraph at lines 69--70
+\OML/cmm/m/it/10 E$
+ []
+
+
+Overfull \hbox (5.11pt too wide) in paragraph at lines 69--70
+\TU/lmr/bx/n/10 c\nullfont ,
+ []
+
+
+Overfull \hbox (5.43pt too wide) in paragraph at lines 69--70
+which[[]]: 
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.71 \begin{equation}
+                   
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 71--71
+[] 
+ []
+
+
+Overfull \hbox (47.44392pt too wide) detected at line 73
+[] \OT1/cmr/m/n/10 = 0
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.75 P
+    roblems arise when a wavefunction has many local minima and saddle point...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 75--76
+[]Problems
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.77 M
+    oreover, if the variational function is orthogonal to the exact solution...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+\citation{ideas_of_qc}
+! Undefined control sequence.
+<write> ... Warning: Citation `\@citeb ' on page \thepage 
+                                                  \space undefined\on@line .
+l.77 ...l principle remains valid.\cite{ideas_of_qc}
+                                                   This is particularly rele...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: Citation `ideas_of_qc' on page  undefined on input line 77.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 77--78
+[]Moreover,
+ []
+
+
+Overfull \hbox (5.43pt too wide) in paragraph at lines 77--78
+valid.[[]]
+ []
+
+! Undefined control sequence.
+l.85 \subsection
+              {Machine Learning Approaches}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85 \subsection{M
+                achine Learning Approaches}
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 85--86
+[]Machine
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.87 I
+    t's worth noting that a paper in Nature was published in 2020, proposing...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 8
+7.
+(C:/Users/Blazej/AppData/Local/Programs/MiKTeX/tex/latex/lm/ot1lmr.fd
+File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for +lmr on input line 87.
+LaTeX Font Info:    No file lmr.fd. on input line 87.
+LaTeX Font Info:    Trying to load font information for +cmr on input line 87.
+LaTeX Font Info:    No file cmr.fd. on input line 87.
+
+
+LaTeX Font Warning: Font shape `/lmr/m/n' undefined
+(Font)              using `/cmr/m/n' instead on input line 87.
+
+
+LaTeX Font Warning: Font shape `/cmr/m/n' undefined
+(Font)              using `/cmr/m/n' instead on input line 87.
+
+! Corrupted NFSS tables.
+wrong@fontshape ...message {Corrupted NFSS tables}
+                                                  error@fontshape else let f...
+l.87 ...pproach to solving time-independent Schr{\"o
+                                                  }dinger equations using a ...
+This error message was generated by an \errmessage
+command, so I can't give any explicit help.
+Pretend that you're Hercule Poirot: Examine all clues,
+and deduce the truth by order and method.
+
+
+LaTeX Font Warning: Font shape `/cmr/m/n' undefined
+(Font)              using `OT1/cmr/m/n' instead on input line 87.
+
+
+LaTeX Font Warning: Font shape `/lmr/m/n' undefined
+(Font)              using `/cmr/m/n' instead on input line 87.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 87--88
+[]It's
+ []
+
+
+Overfull \hbox (10.00002pt too wide) in paragraph at lines 87--88
+Schr\OT1/lmr/m/n/10 \/cmr/m/n/10 o\nullfont dinger
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.89 I
+    t's worth noting, that in 2020 a paper in Nature has been published, whi...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 89--90
+[]It's
+ []
+
+
+Overfull \hbox (5.00002pt too wide) in paragraph at lines 89--90
+Schr[]\/lmr/m/n/10 o\nullfont dinger
+ []
+
+
+Overfull \hbox (29.96304pt too wide) in paragraph at lines 89--90
+\OML/cmm/m/it/10 ansatz$
+ []
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.91 I
+    t's creators trained the model using data obtained with variational Mont...
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+\citation{hermann_deep-neural-network_2020}
+! Undefined control sequence.
+<write> ... Warning: Citation `\@citeb ' on page \thepage 
+                                                  \space undefined\on@line .
+l.92 \cite{hermann_deep-neural-network_2020}
+                                          
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: Citation `hermann_deep-neural-network_2020' on page  undefined o
+n input line 92.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 91--93
+[]It's
+ []
+
+
+Overfull \hbox (5.43pt too wide) in paragraph at lines 91--93
+[[]] 
+ []
+
+)
+! Emergency stop.
+<*> 2.tex
+      
+*** (job aborted, no legal \end found)
+
+
+
+Here is how much of LuaTeX's memory you used:
+ 78 strings out of 476497
+ 100000,1977958 words of node,token memory allocated 40231 words of node memory still in use:
+   361 hlist, 29 vlist, 27 rule, 11 disc, 30 local_par, 1 dir, 19 math, 928 glue
+, 146 kern, 108 penalty, 3904 glyph, 225 attribute, 39 glue_spec, 225 attribute_
+list nodes
+   avail lists: 2:4,3:318,4:64,5:5,7:14,8:290,10:63
+ 22237 multiletter control sequences out of 65536+600000
+ 28 fonts using 1691751 bytes
+ 24i,4n,32p,490b,105s stack positions out of 10000i,1000n,20000p,200000b,200000s
+!  ==> Fatal error occurred, no output PDF file produced!

@@ -1,0 +1,93 @@
+\section{EXISTING WAYS TO SOLVE SCHRÖDINGER EQUATION FOR HYDROGEN ATOM}
+
+\subsection{Analytical Solution}
+
+The number of exact solutions is largely limited, due to exponentially increasing complexity introduced by each additional body in the system. 
+Still, there is no method more precise than that.
+
+Providing an analytical solution offers the opportunity to verify the accuracy of numerical solutions, making it the most precise result that can be obtained. However, the number of exact solutions is limited due to the exponentially increasing complexity introduced by each additional body in the system. This paragraph will not contain any derivations. However, they are available in many standard texts, such as Kołos' \textit{Quantum Chemistry}.
+%TODO atomic values - remove a_0
+A key outcome of these derivations is the set of hydrogen-like real wavefunctions\cite{kolos1978}. These include the following:
+
+\begin{equation}
+	\begin{aligned}
+		& 1s = N_{1s}e^{\frac{-Zr}{a_0}} \\
+		& 2s = N_{2s}e^{\frac{-Zr}{2a_0}}(2 - \frac{Zr}{a_0}) \\
+		& 2p_x =  N_{2p}e^{\frac{-Zr}{2a_0}}x \\
+		& 2p_y =  N_{2p}e^{\frac{-Zr}{2a_0}}y \\
+		& 2p_z =  N_{2p}e^{\frac{-Zr}{2a_0}}z \\		
+		& 3s = N_{3s}e^{\frac{-Zr}{3a_0}}(27 - 18\frac{Zr}{a_0} + 2\frac{Z^2r^2}{a^2_0}) \\
+		& 3p_x =  N_{3p}e^{\frac{-Zr}{3a_0}}(6-\frac{Zr}{a_0})x \\
+		& 3p_y =  N_{3p}e^{\frac{-Zr}{3a_0}}(6-\frac{Zr}{a_0})y \\
+		& 3p_z =  N_{3p}e^{\frac{-Zr}{3a_0}}(6-\frac{Zr}{a_0})z \\
+		& 3d_{3z^2-r^2} =  N_{3d}e^{\frac{-Zr}{3a_0}}(3z^2-r^2) \\
+		& 3d_{xy} =  2\sqrt{3}N_{3d}e^{\frac{-Zr}{3a_0}}xy \\
+		& 3d_{xz} =  2\sqrt{3}N_{3d}e^{\frac{-Zr}{3a_0}}xz \\
+		& 3d_{yz} =  2\sqrt{3}N_{3d}e^{\frac{-Zr}{3a_0}}yz \\
+		& 3d_{x^2=y^2} =  \sqrt{3}N_{3d}e^{\frac{-Zr}{3a_0}}(x^2-y^2) \\
+	\end{aligned}
+\end{equation}
+
+\noindent where
+
+\(N_{1s}, N_{2s}... \) : normalization constants for specific orbital
+
+\(a_0 \) : Bohr radius
+
+\(Z \) : the number of protons in the nucleus, in the case of hydrogen atom $Z$ is equal to 1
+
+\(e \) : Euler's constant
+
+\(x,y,z \) : the distances from the origin of the coordinate system along their respective axis
+
+\(r \) : the distance from the origin of the coordinate system
+
+These functions, when discretized, provide a good initial guess for numerical algorithms implemented in this thesis, especially when the algorithm exhibits unclear divergence when tested with randomly generated vectors. Moreover, the Bohr-Schrödinger energy formula, derived from analytical solutions:
+
+\begin{equation}
+	E_n = -\frac{1}{2n^2}, \quad n \in \mathbb{N}
+\end{equation}
+
+\noindent offers a benchmark for expected energy values, enabling quantitative validation of numerical results.
+
+Analytical solutions are limited to simple systems such as free particles, particles in a box, harmonic oscillators, rigid rotors, or the hydrogen atom. They fail for multi-electron atoms due to electron-electron interactions and cannot handle external perturbations like electric or magnetic fields. These constraints have led to developing new, approximate methods for describing complex quantum systems.
+
+\subsection{Variational Method}
+% TODO robotic voice
+The variational method's foundation is the variational principle, which states that the set of all eigenvalues is limited by the lowest possible value, known as ground state energy $E_1$. This principle applies to systems with finite dimensions, such as atoms, molecules, and crystals. Consequently, for any normalized trial wavefunctions, the expected value of energy is always:
+
+\begin{equation}
+	\langle E \rangle \geqslant E_1
+\end{equation}
+
+\noindent where $E_1$ is the true ground state energy. These functions are often referred to as trial wavefunctions or \textit{ansatz} in classic German literature on quantum mechanics.
+
+A variational method was created based on the variational principle. By selecting a trial wavefunction $\psi_{trial}$, one can compute the approximate energy using Rayleigh's quotient:
+
+\begin{equation} E_{\text{approx}} = \frac{\langle \psi_{\text{trial}} | \hat{H} | \psi_{\text{trial}} \rangle}{\langle \psi_{\text{trial}} | \psi_{\text{trial}} \rangle}. \end{equation}
+
+Since the $\psi_{trial}$ comprises of variables \textbf{x} and parameters \textbf{c}, the task is to minimize the $E$  by fine-tuning the values of parameter vector \textbf{c}, that is finding parameter values, for which\cite{IzaacWang2018ComputationalQM}:
+
+\begin{equation} 
+\frac{\partial E(\textbf{c})}{\partial \textbf{c}} = 0
+\end{equation}
+
+Problems arise when a wavefunction has many local minima and saddle points. Still, the closer the first trial wavefunction is to the real one, the greater the probability of finding the global minimum.
+
+Moreover, if the variational function is orthogonal to the exact solutions of the Schrödinger equation corresponding to all states with lower energy than the target state, the variational principle remains valid.\cite{ideas_of_qc} This is particularly relevant to this thesis, as excited states were calculated by enforcing orthogonality to previously determined solutions.
+
+%\subsection{Hartree-Fock (HF) Method}
+%\cite{thijssen2007}
+% \subsection{Density Functional Theory (DFT)} %for big molecules
+%\subsection{Finite-Difference Methods}
+%\cite{IzaacWang2018ComputationalQM}
+
+\subsection{Machine Learning Approaches}
+
+It's worth noting that a paper in Nature was published in 2020, proposing a machine learning approach to solving time-independent Schr{\"o}dinger equations using a newly developed PauliNet—a deep-learning wavefunction approach for solving systems with up to 30 electrons.
+
+It's worth noting, that in 2020 a paper in Nature has been published, which proposed a machine learning approach to solving time-independent Schr{\"o}dinger equation, using a newly developed PauliNet - a deep-learning wavefunction $ansatz$ for solving systems with up to 30 electrons.
+
+It's creators trained the model using data obtained with variational Monte Carlo.
+\cite{hermann_deep-neural-network_2020}
+

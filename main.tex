@@ -1,0 +1,254 @@
+\documentclass[10pt, twoside]{article} % Rozmiar czcionki 10, marginesy lustrzane (1) i justowanie do obydwu marginesów
+
+% Compiler: LuaLaTex
+
+% do zbiorow
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}
+
+
+% figure, subfigure
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{graphicx}
+
+\numberwithin{equation}{subsection}
+\usepackage{fontspec} % Wymagane do ustawienia czcionki
+\setmainfont{Arial} % Czcionka (rodzaj)
+
+\usepackage[a4paper,
+top=2.5cm, 
+bottom=2.5cm, 
+inner=2.5cm, 
+outer=3.5cm, 
+twoside]{geometry} % Marginesy lustrzane (2)
+
+\usepackage{setspace} % Wymagane do ustawienia interlinii
+\onehalfspacing % Interlinia 1.5 wiersza
+
+\setlength{\parindent}{1.25cm} % Wcięcie w akapitach 1.25 cm
+\usepackage{indentfirst} % Wcięcie (w akapitach) również na początku (sub)sekcji
+
+% Wymagane do ustawienia numeracji stron - - - - - - - - - - - - - - - - - -
+\usepackage{fancyhdr} % Niezbędny pakiet
+\pagestyle{fancy} % Wykorzystanie fancyhdr
+\fancyfoot{} % Wyczyszczenie ustawień nagłówka 
+\fancyhead{} % Wyczyszczenie ustawień stópki
+\renewcommand{\headrulewidth}{0pt} % Usunięcie linii z nagłówka
+\renewcommand{\footrulewidth}{0pt} % Usunięcie linii ze stópki
+\setcounter{page}{1} % Numerowanie od 3, a nie 1
+\fancyfoot[C]{\fontsize{9pt}{11pt}\selectfont \thepage} % Czcionka Arial o rozmiarze 9 z wyśrodkowaniem
+% Wymagane do ustawienia numeracji stron - - - - - - - - - - - - - - - - - -
+
+\AddToHook{cmd/section/before}{\clearpage} % Każda sekcja na nowej stronie
+
+% Wymagane do sformatowania tytułów rozdziałów - - - - - - - - - - - - - - - - - -
+\usepackage{titlesec} % Niezbędny pakiet
+\titlespacing*{\section} % Definicja odstępów dla sekcji
+{0pt} % Wcięcie od lewej
+{12pt} % Miejsce nad tytułem sekcji
+{6pt} % Miejsce poniżej tytułu sekcji
+\titlespacing*{\subsection}{0pt}{12pt}{6pt} % Definicja odstępów dla subsekcji
+\titlespacing*{\subsubsection}{0pt}{12pt}{6pt} % Definicja odstępów dla subsubsekcji
+\titleformat{\section}
+{\normalfont\fontsize{12pt}{14pt}\selectfont\bfseries\MakeUppercase} % Pogrubienie + wielkie litery + rozmiar 12pt
+{\thesection.}{1em}{} % Numeracja z kropką, odstęp 1em
+\titleformat{\subsection}{\normalfont\fontsize{10pt}{12pt}\selectfont\bfseries\itshape}{\thesubsection.}{1em}{} % Pogrubienie, rozmiar 10pt i pochylenie
+\titleformat{\subsubsection}{\normalfont\fontsize{10pt}{12pt}\selectfont\itshape}{\thesubsubsection.}{1em}{} % Pochylenie i rozmiar 10pt
+% Wymagane do sformatowania tytułów rozdziałów - - - - - - - - - - - - - - - - - -
+
+\titlelabel{\thetitle.\quad} % Kropka po numerze tytułu (sub)sekcji
+
+% Wymagane do sformatowania spisu treści - - - - - - - - - - - - - - - - - -
+\usepackage{tocloft} % Niezbędny pakiet
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} % [numer sekcji] [kropka] [nazwa] *[kropki]* [numer strony]
+% [numer sekcji] *[kropka]* [nazwa] [kropki] [numer strony] - - -
+\renewcommand{\cftsecaftersnum}{.}
+\renewcommand{\cftsubsecaftersnum}{.}
+\renewcommand{\cftsubsubsecaftersnum}{.}
+% [numer sekcji] *[kropka]* [nazwa] [kropki] [numer strony] - - -
+% Górny odstęp 0 pkt - - -
+\renewcommand{\cftbeforesecskip}{0pt}
+\renewcommand{\cftbeforesubsecskip}{0pt}
+\renewcommand{\cftbeforesubsubsecskip}{0pt}
+% Górny odstęp 0 pkt - - -
+% Dolny odstęp 6 pkt - - -
+\renewcommand{\cftsecafterpnum}{\vskip6pt}
+\renewcommand{\cftsubsecafterpnum}{\vskip6pt}
+\renewcommand{\cftsubsubsecafterpnum}{\vskip6pt}
+% Dolny odstęp 6 pkt - - -
+% Automatycznie duże litery sekcji?
+% Wymagane do sformatowania spisu treści - - - - - - - - - - - - - - - - - -
+
+\usepackage{csquotes} % Potrzebny do BiblaTex
+\usepackage[
+backend=biber,
+style=numeric-comp, % [numer] + pojawią się zakresy, np. [1-2]
+sorting=none % Sortowanie według kolejności występowania
+]{biblatex} % Ustawienia bibliografii
+\addbibresource{full_bibliography.bib} % Załączenie bibliografii
+
+\usepackage{etoolbox} % Potrzebny do modyfikacji akapitów bibliografii
+\AtBeginBibliography{\setlength{\parskip}{6pt} \setlength{\parindent}{0pt}} % Dolny odstęp 6 pt, górny odstęp 0 pt
+\renewcommand*{\finentrypunct}{\par} % Zapewnia, że po każdym wpisie bibliograficznym jest akapit
+
+\usepackage{graphicx} % Wymagane do wstawiania obrazów
+
+% Formatowanie podpisu obrazków - - - - - - - - - - - - - - - - - -
+\usepackage[figurename=Fig.]{caption} % Niezbędny pakiet
+\usepackage{chngcntr} % Wymagane do zmiany numeracji
+\counterwithin{figure}{section} % Numeracja obrazków zależna od sekcji (rozdziału)
+\renewcommand{\thefigure}{\thesection.\arabic{figure}} % Format numeracji obrazków
+\captionsetup[figure]{
+	font=small,                % Rozmiar czcionki (około 9pt)
+	labelformat=simple,        % Format etykiety (np. "Rysunek 1")
+	labelsep=period,           % Separator między etykietą a opisem
+	justification=centering,   % Wyśrodkowanie podpisu
+	% skip=12pt,               % Odstęp między obrazkiem a podpisem
+	textfont=normalfont,       % Czcionka normalna, bez kursywy
+	belowskip=-6pt,            % Dolny odstęp akapitu podpisu
+	% aboveskip=6pt,           % Górny odstęp akapitu podpisu
+	% parskip=0pt,             % Odstęp między akapitami podpisu
+	format=plain,              % Formatowanie podpisu, brak kropki na końcu
+} % Formatowanie podpisu pod obrazkami
+% Formatowanie podpisu obrazków - - - - - - - - - - - - - - - - - -
+
+% Formatowanie podpisu tabel - - - - - - - - - - - - - - - - - -
+\usepackage[table,xcdraw]{xcolor} % Niezbędny pakiet
+\counterwithin{table}{section} % Numeracja tabel zależna od sekcji (rozdziału)
+\renewcommand{\thetable}{\thesection.\arabic{table}} % Format numeracji tabel
+\captionsetup[table]{
+	font=small,                % Rozmiar czcionki (około 9pt)
+	labelformat=simple,        % Format etykiety (np. "Tab. 1")
+	labelsep=period,           % Separator między etykietą a opisem
+	justification=centering,   % Wyśrodkowanie podpisu
+	% skip=12pt,               % Odstęp między tabelą a podpisem
+	textfont=normalfont,       % Czcionka normalna, bez kursywy
+	belowskip=-6pt,            % Dolny odstęp akapitu podpisu
+	% aboveskip=6pt,           % Górny odstęp akapitu podpisu
+	% parskip=0pt,             % Odstęp między akapitami podpisu
+	format=plain,              % Formatowanie podpisu, brak kropki na końcu
+} % Formatowanie podpisu pod tabelami
+% Formatowanie podpisu tabel - - - - - - - - - - - - - - - - - -
+
+\usepackage{enumitem} % Wymagane do zmiany odległości pomiędzy wierszami w listach
+
+\usepackage{hyperref} % Podświetlanie URL, źródeł i zakładek z opcją przeniesienia na kliknięcie (widoczne tylko przed eksportem)
+
+\usepackage{lscape} % Wymagane do zmiany orientacji tabeli
+\usepackage{longtable} % Wymagane do tabelii na wielu stronach
+
+% Wymagane do listingów - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+\usepackage{listings} % Wymagany pakiet
+\usepackage{xcolor} % Potrzebne do poprawnego wyświetlania listingów
+% Definicja kolorów
+\definecolor{codeblue}{rgb}{0.26, 0.48, 0.77}
+\definecolor{codegreen}{rgb}{0.13, 0.54, 0.13}
+\definecolor{codegray}{rgb}{0.5, 0.5, 0.5}
+\definecolor{codepurple}{rgb}{0.58, 0, 0.82}
+\definecolor{backcolor}{rgb}{0.95, 0.95, 0.92}
+% Konfiguracja języka TypeScript
+\lstdefinelanguage{Python}{
+	keywords={def, class, return, if, elif, else, for, while, break, continue, pass, import, from, as, lambda, with, try, except, finally, raise, assert, yield, global, nonlocal, async, await},
+	keywordstyle=\color{codeblue}\bfseries, % Keywords in blue
+	ndkeywords={True, False, None},
+	ndkeywordstyle=\color{codepurple}, % Special values in purple
+	identifierstyle=\color{black}, % Variable names in black
+	sensitive=true, % Case-sensitive
+	comment=[l]{\#}, % Single-line comments
+	morecomment=[s]{'''}{'''}, % Multi-line comments with triple single quotes
+	morecomment=[s]{"""}{"""}, % Multi-line comments with triple double quotes
+	commentstyle=\color{codegreen}\ttfamily, % Comments in green
+	stringstyle=\color{orange}\ttfamily, % Strings in orange
+	morestring=[b]', % Single and double quotes
+	morestring=[b]"
+}
+% Ogólne ustawienia dla listingów
+\lstset{
+	language=Python,               % Język programowania
+	backgroundcolor=\color{backcolor}, % Tło dla kodu
+	basicstyle=\ttfamily\small,        % Podstawowy styl czcionki
+	keywordstyle=\color{codeblue}\bfseries, % Kolorowanie słów kluczowych
+	ndkeywordstyle=\color{codepurple}, % Kolorowanie specjalnych wartości
+	commentstyle=\color{codegreen}\ttfamily, % Styl komentarzy
+	stringstyle=\color{orange}\ttfamily,     % Styl łańcuchów znaków
+	numbers=left,                     % Numerowanie linii po lewej stronie
+	numberstyle=\tiny\color{codegray},% Styl numerów linii
+	stepnumber=1,                     % Co ile numerować linie
+	frame=single,                     % Ramka wokół kodu
+	rulecolor=\color{codegray},       % Kolor ramki
+	breaklines=true,                  % Automatyczne łamanie długich linii
+	tabsize=2,                        % Rozmiar tabulatora
+	showspaces=false,                 % Nie pokazuj spacji
+	showstringspaces=false            % Nie pokazuj spacji w łańcuchach znaków
+}
+% Wymagane do listingów - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+\usepackage{pdfpages} % Wymagane do załączenia pliku PDF
+
+\begin{document}
+	
+	\includepdf[pages=-, pagecommand={\thispagestyle{empty}}]{title_page.pdf}
+	
+%	\includepdf[pages=-, pagecommand={\thispagestyle{empty}}]{Oswiadczenie.pdf}
+	
+	\input{chapters/abstract}
+	\newpage
+	\input{chapters/abstract_eng}
+	
+	\newpage
+	\begin{singlespace} % Interlinia 1
+		\tableofcontents
+	\end{singlespace}
+	\thispagestyle{fancy} % Potrzebne, żeby dla strony tytułowej zadziałało formatowanie dla numeracji stron (rozmiar i rodzaj czcionki)
+	
+	\newpage
+	\input{chapters/0_keywords}
+	
+	\input{chapters/1}
+	
+	\input{chapters/2}
+	
+	\input{chapters/3}
+	
+	\input{chapters/4}
+	
+	\input{chapters/5}
+	
+	\begin{singlespace} % Interlinia 1
+		\addcontentsline{toc}{section}{References}
+		\printbibliography[title=References]
+		% Np. type=book / nottype=online w przypadku rozdziału na rodzaje
+%		\printbibliography[title=References: articles, type=article]
+%		\printbibliography[title=References: books, type=book]
+		%\printbibliography[title=References: phdthesis, type=phdthesis]
+		\sloppy % Łamie URL, tak żeby zgadzały się z ustalonymi marginesami strony
+%		\printbibliography[title=References: online sources, type=online]
+		% Rozdział bibliografii na dwie sekcje daje ostrzeżenie z zachętą do rozdzielenia numeracji
+	\end{singlespace}
+	
+	\newpage
+	\begin{singlespace} % Interlinia 1
+		\addcontentsline{toc}{section}{List of figures}
+		\renewcommand{\listfigurename}{List of Figures}
+		\listoffigures
+	\end{singlespace}
+	
+	\newpage
+	\begin{singlespace} % Interlinia 1
+		\addcontentsline{toc}{section}{List of Tables}
+		\renewcommand{\listtablename}{List of Tables}
+		\listoftables
+	\end{singlespace}
+	
+	\newpage
+	\begin{singlespace} % Interlinia 1
+		\addcontentsline{toc}{section}{List of Listings}
+		\renewcommand{\lstlistlistingname}{List of Listings}
+		\lstlistoflistings
+	\end{singlespace}
+	
+	\input{chapters/appendix}
+	
+\end{document}
