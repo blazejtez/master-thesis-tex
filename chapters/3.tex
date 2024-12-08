@@ -280,8 +280,38 @@ Moreover, CuPy provided the TextureObject\cite{cupy_texture} and SurfaceObject\c
 \subsubsection{CUDA}
 
 In this work, we meet the case of data parallelism\cite{cheng2014professional}, which is a situation where calculation time might benefit when many data items are operated at the same time. The CUDA approach for such problems is to provide each thread with equal parts of data so that every thread can work on its part simultaneously.
+%TODO BERGMAN NOTED! change this paragraph
+An important issue with parallel computation has been raised by members of high performance computing (HPC) community. Krotkiewski noted, the \textit{flop to byte ratio} (F2B), defined as floating-point operations per second (FLOPs) divided by the available memory bandwith (in bytes per second) is a recognized challenge in high performance computing. It is especially important in algorithms that characterize in high memory utilization compared to the number of arithmetic instructions done. This puts pressure on scientists to design algorithms efficient not only from computational, but also space complexity.\cite{krotkiewski2013efficient}
 
-An important issue with parallel computation is the 
+\vspace{0.2cm}
+
+\begin{table}[!ht]
+	\centering
+	\caption{Comparison of FLOP, Memory Bandwidth, and FLOP-to-Byte Ratio for NVIDIA GPUs}
+	\label{tab:gpu-comparison}
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{|l|c|c|c|}
+			\hline
+			\textbf{GPU Model}         & \textbf{FLOP (TFLOPS)} & \textbf{Memory Bandwidth (GB/s)} & \textbf{FLOP-to-Byte Ratio (FLOP/byte)} \\ \hline
+			NVIDIA Tesla C2050         & 1.03                   & 144                              & 7.15                                    \\ \hline
+			NVIDIA RTX A4000           & 19.2                   & 448                              & 42.9                                    \\ \hline
+			NVIDIA TITAN RTX           & 16.3                   & 672                              & 24.2                                    \\ \hline
+			NVIDIA GeForce RTX 4090    & 82.6                   & 1,010                            & 81.8                                    \\ \hline
+			
+		\end{tabular}%
+	}
+	\smallskip
+	\small \textit{Source}: Own elaboration based on techpowerup.com publications\cite{techpowerup1}\cite{techpowerup2}\cite{techpowerup3}
+\end{table}
+
+Since the publication of Krotkiewki's findings, the problem only was exacerbated. The NVIDIA Tesla C2050 mentioned in his article has half of F2P compared to it's current successor, NVIDIA RTX A4000. Moreover, the cards utilized in this work were characterized by even higher F2P, further highlighting the growing disparity between computational power and memory bandwidth.
+% tutaj wjezdza Akhtar i moja implementacja
+\vspace{0.2cm}
+\lstinputlisting[caption=Simple element-wise kernel, label=listing1, captionpos=b]{listings/3/listing1.py}
+takes two arguments, x and y and the return value is stored in the variable z.
+
+CUDA offers 
+
 Raw kernels were written using the technique described by Akhtar et al.\cite{akhtar2018efficient}. and Krotkiewski \cite{krotkiewski2013efficient}
 
 
