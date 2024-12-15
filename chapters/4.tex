@@ -1,12 +1,194 @@
-\section{Results 5 pages}
+\section{Results}
 
 \subsection{Application of the new method}
 %% Apply your method to relevant problems or case studies.
-TODO
+
+\subsubsection{Hamiltonian}
+
+ The listing for 7-point stencil is presented in Listing 4. The boundary conditions were implemented, such that the memory boundaries are explicitly set to zero.
+
+\vspace{0.2cm}
+\lstinputlisting[caption=Listing of Laplace operator., label=listing4, captionpos=b]{listings/4/listing4.py}
+
+The potential operator was also implemented in similar fashion, as presented in Listing 5. The singularity of $\frac{1}{r}$ was resolved through usage of parameter eps, which makes the potential values bounded above $\frac{1}{eps}$, reducing numerical error.
+
+\vspace{0.2cm}
+\lstinputlisting[caption=Listing of potential operator., label=listing5, captionpos=b]{listings/4/listing5.py}
+
+Both operators are utilized in Hamiltonian Python class, which provides the functionality of matvec() function, which operate with Hamiltonian on a vector, and matmat() which operates with Hamiltonian on a matrix. Those functions, as well as shape attribute are required to instantiate a CuPy Operator class with Hamiltonian.
+
+\vspace{0.2cm}
+\lstinputlisting[caption=Listing of Hamiltonian class., label=listing6, captionpos=b]{listings/4/listing6.py}
+
+
+\subsubsection{Goal function class}
+
+The equations presented in section 3.4 are a general case for all calculations, which is why it was implemented as goal function class, with listing as follows:
+
+\vspace{0.2cm}
+\lstinputlisting[caption=Goal function class, label=listing7, captionpos=b]{listings/4/listing7.py}
+
+
+This implementation is a way to separate the responsibilities of representing the state of wavefunction from calculations made on it by minimizing algorithms, and return the values of gradient and objective function. GoalGradient has two dependencies: A stands for the Hamiltonian operator object, while Y is the matrix containing previous wavefunctions from previous calculation. When it's the first value calculated, the Y should be set to None.
+
+The validation of both Hamiltonian operator as well as this GoalClass, according to the advice obtained during consultations with Dr. Syty and Prof. Sienkiewicz, was through inputting it with known wavefunction, which is described in Comparative analysis section.
+
+\vspace{0.2cm}
+\lstinputlisting[caption=Exemplary wavefunction implementation, label=listing8, captionpos=b]{listings/4/listing8.py}
+
+Function creates an ansatz of proper extent (in hydrogen radiuses) with proper grid density, represented by parameter N.
+
+\subsection{Minimizing algorithms implementations}
+\subsubsection{Gradient descent}
+
+Listing
+
+\subsubsection{Adam}
+
+Listing
+
+\subsubsection{Perturbed gradient descent}
+
+Listing
+
+aaaa
+aaa
+a
+a
+aa
+
+aaaa
+a
+a
+aaaa
+
+aaaaaaaa
 
 \subsection{Comparative analysis}
 %% Compare the results of the new method with those of existing methods. Use graphs, tables, or figures to illustrate differences in performance, accuracy, or computational efficiency.
-TODO
+
+
+\subsubsection{Hydrogen ground state validation}
+
+First step in validating the method was placing the known ansatz functions in gradient algorithms, to check whether they return correct values on first step. This proves, whether the Hamiltonian implementation and goal function class are correct. For ground state, the Listing \ref{listing8} was used. Other ansatz were implemented in the same fashion, according to formulas 2.1.1. Obtained results are presented in Table \ref{tab:stencil-comparison-ground-state-values}.
+
+%TODO
+\begin{table}[!ht]
+	\centering
+	\caption{Comparison of stencils' obtained ground state energies of hydrogen. Analytically obtained value: -0.5}
+	\label{tab:stencil-comparison-ground-state-values}
+	\small % Adjust font size for the table
+	\begin{tabular}{|l|c|c|c|}
+		\hline
+		\textbf{Stencil type}    & \textbf{Gradient descent} & \textbf{Adam} & \textbf{LOBPCG} \\ \hline
+		7-point                  & 0.4                       & 0.4           & 7.15       \\ \hline
+		19-point                 & 0.4                       & 0.4           & 42.9       \\ \hline
+		27-point                 & 0.4                       & 0.4           & 0.4        \\ \hline
+	\end{tabular}
+	
+	\smallskip
+	\small \textit{Source}: Own elaboration
+\end{table}
+
+
+\begin{table}[!ht]
+	\centering
+	\caption{Comparison of stencils' number of iterations}
+	\label{tab:stencil-comparison-ground-state-values}
+	\small % Adjust font size for the table
+	\begin{tabular}{|l|c|c|c|}
+		\hline
+		\textbf{Stencil type}    & \textbf{Gradient descent} & \textbf{Adam} & \textbf{LOBPCG} \\ \hline
+		7-point                  & 0.4                       & 0.4           & 7.15       \\ \hline
+		19-point                 & 0.4                       & 0.4           & 42.9       \\ \hline
+		27-point                 & 0.4                       & 0.4           & 0.4        \\ \hline
+	\end{tabular}
+	
+	\smallskip
+	\small \textit{Source}: Own elaboration
+\end{table}
+
+\begin{table}[!ht]
+	\centering
+	\caption{Comparison of stencils' time of calculations}
+	\label{tab:stencil-comparison-ground-state-values}
+	\small % Adjust font size for the table
+	\begin{tabular}{|l|c|c|c|}
+		\hline
+		\textbf{Stencil type}    & \textbf{Gradient descent} & \textbf{Adam} & \textbf{LOBPCG} \\ \hline
+		7-point                  & 0.4                       & 0.4           & 7.15       \\ \hline
+		19-point                 & 0.4                       & 0.4           & 42.9       \\ \hline
+		27-point                 & 0.4                       & 0.4           & 0.4        \\ \hline
+	\end{tabular}
+	
+	\smallskip
+	\small \textit{Source}: Own elaboration
+\end{table}
+
+\begin{table}[!ht]
+	\centering
+	\caption{Value, time and iterations of each algorithm with different stencil types}
+	\label{tab:stencil-comparison}
+	\small
+	\begin{tabular}{|l|ccc|ccc|ccc|}
+		\hline
+		\textbf{Stencil type} & \multicolumn{3}{c|}{\textbf{Gradient Descent}} & \multicolumn{3}{c|}{\textbf{Adam}} & \multicolumn{3}{c|}{\textbf{LOBPCG}} \\ \hline
+		& Value & Iterations & Time & Value & Iterations & Time & Value & Iterations & Time \\ \hline
+		7-point              & 0.4   & 100        & 1.2s & 0.4   & 80         & 1.0s & 7.15  & 20         & 0.8s \\ \hline
+		19-point             & 0.4   & 120        & 1.8s & 0.4   & 90         & 1.5s & 42.9  & 25         & 1.2s \\ \hline
+		27-point             & 0.4   & 110        & 1.5s & 0.4   & 85         & 1.2s & 0.4   & 15         & 0.6s \\ \hline
+	\end{tabular}
+	\smallskip
+	\small \textit{Source}: Own elaboration
+\end{table}
+
+This proven, that objective function returns approximately correct results, utilizing the implemented Hamiltonian operator with implemented stencils. Next up, the methods were inputted with random vector, to check whether the algorithms converge to correct values, while the time and number of iterations for each Laplacian stencils was measured. All the methods implemented the same learning rate equal 1e-5.
+
+%wykresy zbiegania
+%obrazek porównujący wszystkie uzyskane orbitale z użyciem mayavi
+
+\subsubsection{Hydrogen excited states validation}
+
+After that, the analysis has been done, to check which algorithms perform the best in calculating excited states of hydrogen. 
+
+% wykresy zbiegania
+% obrazek pokazujący orbitale uzyskane w trakcie analizy
+
+
+%from pyscf import gto, scf, tdscf
+%import time
+
+%mol = gto.M(
+%atom='H 0 0 0',
+%basis='cc-pVDZ',
+%spin=1  # one electron system -> open shell
+%)
+
+%# Use UHF for open-shell
+%mf = scf.UHF(mol)
+
+%start_time = time.time()
+%hf_energy = mf.kernel()
+%end_time = time.time()
+%print("Ground-state HF energy:", hf_energy)
+%print("Ground-state calculation time: {:.6f} seconds".format(end_time - start_time))
+
+%mytd = tdscf.TDA(mf)  # This will create a UHF-TDA object automatically
+%start_time = time.time()
+%try:
+%excitation_energies, xy = mytd.kernel()
+%end_time = time.time()
+%print("Excited-state energies (in Hartree):", excitation_energies)
+%print("Excited-state calculation time: {:.6f} seconds".format(end_time - start_time))
+%except ValueError as e:
+%print("No excited states found or error occurred:", e)
+
+%converged SCF energy = -0.499278403419583  <S^2> = 0.75  2S+1 = 2
+Ground-state HF energy: -0.49927840341958285
+
+Ground-state calculation time: 0.018982 seconds
+
+No excited states found or error occurred: zero-size array to reduction operation maximum which has no identity
 
 \subsection{Discussion of results}
 %% Analyze the results in detail, explaining why your method performs better (or not) under certain conditions.

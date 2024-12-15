@@ -6,10 +6,11 @@ The potential of exact solutions is significantly constrained by the rapidly esc
 Despite the limitations, the existing methods remain the pinnacle of precision in quantum mechanics.
 
 Providing an analytical solution offers the opportunity to verify the accuracy of numerical solutions, making it the most precise result that can be obtained. However, the number of exact solutions is limited due to the exponentially increasing complexity introduced by each additional body in the system. This paragraph will not contain any derivations. However, they are available in many standard texts, such as Kołos' \textit{Quantum Chemistry}.
-%TODO atomic values - remove a_0
+
 A key outcome of these derivations is the set of hydrogen-like real wavefunctions\cite{kolos1978}. These include the following:
 
 \begin{equation}
+	\label{eq211}
 	\begin{aligned}
 		& 1s = N_{1s}e^{\frac{-Zr}{a_0}} \\
 		& 2s = N_{2s}e^{\frac{-Zr}{2a_0}}(2 - \frac{Zr}{a_0}) \\
@@ -51,8 +52,8 @@ These functions, when discretized, provide a good initial guess for numerical al
 \noindent offers a benchmark for expected energy values, enabling quantitative validation of numerical results.
 
 Analytical solutions are limited to simple systems such as free particles, particles in a box, harmonic oscillators, rigid rotors, or the hydrogen atom eigen. They fail for multi-electron atoms due to electron-electron interactions and cannot handle external perturbations like electric or magnetic fields. These constraints have led to the development of new, approximate methods for describing complex quantum systems.
-
-\subsection{Variational Method}
+\subsection{Fundamental approximate methods}
+\subsubsection{Variational Method}
 The variational method's foundation is the variational principle, which states that:
 \begin{equation}
 	\langle E \rangle \geqslant E_1
@@ -60,11 +61,14 @@ The variational method's foundation is the variational principle, which states t
 
 \noindent for any normalized trial wavefunctions That means that the set of all eigenvalues is bounded below by $E_1$, the actual ground state energy. This principle applies to systems with finite dimensions, such as atoms, molecules, and crystals. These functions are often referred to as trial wavefunctions or \textit{ansatz} in classic German literature on quantum mechanics.
 
+Moreover, if the variational function is orthogonal to the exact solutions of the Schrödinger equation corresponding to all states with lower energy than the target state, the variational principle remains valid.\cite{ideas_of_qc} This is particularly relevant to this thesis, as excited states were calculated by enforcing orthogonality to previously determined solutions.
+
 A variational method was created based on the variational principle. By selecting a trial wavefunction $\psi_{trial}$, one can compute the approximate energy using Rayleigh's quotient:
 
 \begin{equation} E_{\text{approx}} = \frac{\langle \psi_{\text{trial}} | \hat{H} | \psi_{\text{trial}} \rangle}{\langle \psi_{\text{trial}} | \psi_{\text{trial}} \rangle}. \end{equation}
 
-Since the $\psi_{trial}$ comprises of variables \textbf{x} and parameters \textbf{c}, the task is to minimize the $E$  by fine-tuning the values of parameter vector \textbf{c}, that is finding parameter values, for which\cite{IzaacWang2018ComputationalQM}:
+Since the $\psi_{trial}$ comprises of variables \textbf{x} and parameters \textbf{c}, the task is to minimize the $E$  by fine-tuning the values of parameter vector \textbf{c}, that is finding parameter values, for which\cite{IzaacWang2018ComputationalQM}
+
 
 \begin{equation} 
 	\frac{\partial E(\textbf{c})}{\partial \textbf{c}} = 0
@@ -72,20 +76,110 @@ Since the $\psi_{trial}$ comprises of variables \textbf{x} and parameters \textb
 
 Problems arise when a wavefunction has many local minima and saddle points. Still, the closer the first trial wavefunction is to the real one, the greater the probability of finding the global minimum.
 
-Moreover, if the variational function is orthogonal to the exact solutions of the Schrödinger equation corresponding to all states with lower energy than the target state, the variational principle remains valid.\cite{ideas_of_qc} This is particularly relevant to this thesis, as excited states were calculated by enforcing orthogonality to previously determined solutions.
+\subsubsection{Method of moments}
 
-%\subsection{Hartree-Fock (HF) Method}
+The Method of Moments (MoM) is a mathematical and computational technique widely used in physics, engineering, and quantum chemistry to solve integral equations. It is particularly effective for problems where a system’s behavior can be described by an operator equation involving unknown functions. In quantum chemistry, the method is often applied to calculate molecular properties and solve electronic structure problems by approximating wavefunctions or density distributions.
+
+The core idea of the MoM is to transform a continuous integral equation into a discrete system of linear algebraic equations. This is achieved by expanding the unknown function in terms of a set of basis functions and enforcing the equation's validity over a chosen set of test functions, typically using the concept of "moments." The unknown coefficients in the expansion are determined by solving the resulting matrix equation.
+
+In quantum chemistry, the MoM finds application in approximating molecular integrals, solving Hartree-Fock equations, or describing response properties such as dipole moments and polarizabilities. For example, in the context of electronic structure calculations, the MoM is used to approximate molecular orbitals or electron densities by expanding them in terms of basis functions, such as Gaussian or Slater-type orbitals. By projecting the Schrödinger equation onto these basis functions, the continuous problem is reduced to a solvable matrix eigenvalue problem.
+
+One of the main advantages of the Method of Moments is its ability to provide accurate approximations while maintaining computational efficiency, especially when combined with advanced numerical techniques such as sparse matrix solvers. However, the accuracy of the results strongly depends on the choice of basis and test functions, and poor choices can lead to numerical instability or convergence issues. Additionally, the method can become computationally demanding for very large systems due to the size of the resulting matrices.
+
+Despite these challenges, the MoM is a versatile and powerful approach in quantum chemistry and related fields. It provides a foundation for many modern techniques, including Density Functional Theory (DFT) and Coupled Cluster methods, and continues to evolve with advancements in computational algorithms and hardware.
+
+\subsubsection{Perturbational theory}
+
+Perturbation theory is a mathematical framework used in quantum chemistry and physics to approximate the solutions of complex problems by starting with a simpler, solvable system and gradually accounting for small corrections. It is particularly useful when the exact solution of the Schrödinger equation is intractable, and the system of interest can be seen as a modification (perturbation) of a simpler, idealized system.
+
+The core concept involves dividing the Hamiltonian of the system into two parts:
+
+\begin{equation}
+	\hat{H} = \hat{H_0} + \lambda \hat{H'}
+\end{equation}
+
+where $\hat{H_0}$ is the Hamiltonian of the unperturbed system (with known solutions), $\hat{H'}$ is the perturbation operator representing the deviations, and $\lambda$ is a small parameter controlling the strength of the perturbation.
+
+Perturbation theory provides a systematic way to calculate corrections to the energy levels and wavefunctions of the unperturbed system as a power series in $\lambda$. The first-order correction to the energy accounts for the direct effect of the perturbation, while second-order corrections include contributions from the coupling between different states. Higher-order corrections can be included for greater accuracy, though they become increasingly complex.
+
+In quantum chemistry, perturbation theory is widely applied in methods like Møller-Plesset perturbation theory (MPn), where the Hartree-Fock solution is treated as the unperturbed system, and electron correlation is introduced as a perturbation. For example, MP2 (second-order perturbation theory) is a common method used to improve upon Hartree-Fock calculations for molecular energies.
+
+The advantages of perturbation theory lie in its conceptual simplicity and efficiency for systems where the perturbation is small relative to the unperturbed Hamiltonian. However, it has limitations. If the perturbation is too large or the unperturbed system poorly represents the true system, the series may fail to converge or provide inaccurate results. This can occur in systems with strong electron correlation or near-degenerate states.
+
+Despite these challenges, perturbation theory remains an indispensable tool in quantum chemistry, offering a balance between computational cost and accuracy. It is frequently used to calculate molecular properties, analyze spectroscopic transitions, and benchmark more complex computational methods.
+
+
+
+\subsection{Existing implementations of approximate methods}
+
+\subsubsection{Hartree-Fock (HF) Method}
+
+The Hartree-Fock (HF) method is a fundamental approximation method in quantum chemistry used to calculate the electronic structure of atoms, molecules, and solids. It provides an efficient way to solve the many-electron Schrödinger equation by approximating the complex interactions between electrons. While not exact, it serves as the foundation for more advanced methods in quantum chemistry.
+
+At its core, the Hartree-Fock method assumes that the total wavefunction of a multi-electron system can be approximated as a single Slater determinant, which ensures compliance with the Pauli exclusion principle by maintaining the antisymmetry of the wavefunction. This determinant is constructed from a set of one-electron wavefunctions, or orbitals, which are iteratively optimized to minimize the total energy of the system.
+
+The HF method replaces the many-body electron-electron interaction with an average potential, known as the mean-field approximation. Each electron is considered to move in the average field created by all other electrons, simplifying the computational complexity. The central equations, called the Hartree-Fock equations, are derived from the variational principle and solved iteratively using methods such as the self-consistent field (SCF) procedure.
+
+While the HF method captures the key features of quantum systems, such as orbital structure and bonding, it neglects electron correlation, which arises from instantaneous interactions between electrons. This limitation often leads to overestimated total energies, although trends in relative energies, such as bond energies, are often accurate. More advanced methods, such as Møller-Plesset perturbation theory (MP2) and Coupled Cluster theory, are built on HF to include electron correlation effects.
+
+The computational cost of HF scales as $O(N^4)$, where $N$ is the number of basis functions. This makes it relatively efficient compared to post-HF methods, enabling its application to medium-sized molecules. HF calculations also serve as a starting point for hybrid approaches, like Density Functional Theory (DFT), where the exchange energy from HF is combined with correlation effects from DFT.
+
+Despite its limitations, the Hartree-Fock method remains a cornerstone of quantum chemistry. Its simplicity, efficiency, and conceptual clarity make it an essential tool for understanding electronic structures, benchmarking more sophisticated methods, and modeling molecular properties.
 %\cite{thijssen2007}
-% \subsection{Density Functional Theory (DFT)} %for big molecules
-%\subsection{Finite-Difference Methods}
-%\cite{IzaacWang2018ComputationalQM}
+\subsubsection{Density Functional Theory (DFT)}
 
-\subsection{Machine Learning Approaches}
+Density Functional Theory (DFT) is a computational quantum mechanical modeling method used to investigate the electronic structure of many-body systems, particularly atoms, molecules, and condensed phases. DFT simplifies the complex problem of solving the Schrödinger equation for a system of interacting electrons and nuclei by focusing on the electron density as the fundamental quantity rather than the many-electron wavefunction. This makes DFT computationally efficient while maintaining reasonable accuracy, making it one of the most widely used approaches in quantum chemistry and solid-state physics.
 
-It's worth noting that a paper in Nature was published in 2020, proposing a machine-learning approach to solving time-independent Schr{"o}dinger equations using a newly developed PauliNet—a deep-learning wavefunction approach for solving systems with up to 30 electrons. This emerging approach holds great promise for the future of quantum mechanics research.
+The core idea of DFT stems from the Hohenberg-Kohn theorems (1964), which establish that the ground-state properties of a quantum system are uniquely determined by its electron density, 
+𝜌
+(
+𝑟
+)
+ρ(r). These theorems provide the foundation for reformulating the many-body Schrödinger equation in terms of density, significantly reducing the complexity of the problem. Instead of solving for a wavefunction with 
+3
+𝑁
+3N variables for 
+𝑁
+N electrons, DFT focuses on 
+𝜌
+(
+𝑟
+)
+ρ(r), which depends only on three spatial dimensions.
 
-It is worth noting that in 2020, a paper in Nature was published, which proposed a machine learning approach to solving time-independent Schr{\"o}dinger equation, using a newly developed PauliNet - a deep-learning wavefunction $ansatz$ for solving systems with up to 30 electrons.
+The practical implementation of DFT relies on the Kohn-Sham approach (1965), which introduces a system of non-interacting electrons that produces the same density as the real interacting system. The total energy is expressed as a functional of the electron density, incorporating terms for the kinetic energy, electron-nucleus attraction, electron-electron Coulomb repulsion, and the exchange-correlation energy. Among these, the exchange-correlation energy functional is crucial but also the most challenging to approximate. Various approximations, such as the Local Density Approximation (LDA) and Generalized Gradient Approximation (GGA), are commonly used in practice.
 
-Its creators trained the model using data obtained with variational Monte Carlo.
-\cite{hermann_deep-neural-network_2020}
+DFT is versatile and applicable to a broad range of problems, from calculating molecular properties and reaction energies to studying the electronic band structure of materials. However, its accuracy depends heavily on the choice of exchange-correlation functional. While DFT is often praised for its balance between computational cost and accuracy, limitations include difficulties in describing strongly correlated systems, dispersion interactions, and excited states.
 
+Despite its challenges, the wide applicability, efficiency, and ability to handle large systems have made DFT an indispensable tool in materials science, chemistry, and nanotechnology, bridging the gap between quantum mechanics and practical simulations.
+
+
+
+\subsubsection{Finite-Difference Methods}
+Finite Difference Methods (FDM) play an important role in quantum chemistry, offering a numerical framework to solve the Schrödinger equation for molecular and atomic systems. By discretizing the spatial domain into a finite grid and approximating derivatives using finite differences, FDM transforms the continuous differential equations into algebraic systems that can be solved computationally.
+
+The primary advantage of FDM in quantum chemistry is its simplicity and flexibility. It can handle arbitrary boundary conditions and irregular potentials with minimal modifications, making it suitable for studying systems with external fields, complex geometries, or quantum confinement. Additionally, FDM scales well to larger systems when implemented on modern hardware, especially GPUs, which can parallelize the computations over large grids.
+
+However, FDM has limitations in quantum chemistry. The accuracy of the method depends on the grid resolution; finer grids reduce truncation errors but increase computational cost and memory requirements. Moreover, FDM can struggle with long-range interactions or systems requiring very high precision, such as those with strong electron correlation, where alternative approaches like basis set methods or hybrid techniques might be more efficient.
+
+Despite these challenges, FDM is a valuable tool for quantum chemistry. It is especially effective for educational purposes and research on confined systems, low-dimensional structures, and exploratory studies. The method can also be extended to multi-electron systems and higher-dimensional problems, provided computational resources are sufficient. With advancements in hardware acceleration and numerical optimization, FDM continues to evolve as a practical approach for solving quantum mechanical problems.%\cite{IzaacWang2018ComputationalQM}
+
+\subsubsection{Monte Carlo Methods}
+
+Monte Carlo methods are a class of stochastic techniques widely used in quantum chemistry to solve problems involving high-dimensional integrals, which are often computationally intractable using deterministic methods. These methods rely on random sampling to approximate quantities of interest, making them particularly useful for studying quantum systems with many interacting particles, such as electrons in atoms or molecules.
+
+One prominent application is Quantum Monte Carlo (QMC), which encompasses a variety of algorithms, including Variational Monte Carlo (VMC), Diffusion Monte Carlo (DMC), and Path Integral Monte Carlo (PIMC). These methods aim to solve the Schrödinger equation or evaluate quantum observables by sampling configurations of a quantum system based on the probability distribution derived from the wavefunction or density matrix.
+
+In Variational Monte Carlo (VMC), the trial wavefunction is parametrized, and the energy expectation value is minimized by sampling electron configurations. This approach provides insights into the system's ground-state properties with manageable computational effort. Diffusion Monte Carlo (DMC), on the other hand, refines the ground-state energy by simulating the imaginary-time evolution of the wavefunction. By "filtering out" higher-energy states, DMC achieves a highly accurate estimate of the ground-state energy, often outperforming traditional methods like Hartree-Fock.
+
+Monte Carlo methods are particularly powerful because their computational cost scales favorably with system size, making them suitable for large systems and complex wavefunctions. Unlike deterministic methods, Monte Carlo approaches are less affected by the dimensionality of the problem, which is critical in quantum chemistry where the electronic wavefunction depends on $3N$ spatial coordinates for $N$ electrons. Furthermore, they are well-suited to account for electron correlation effects, a challenge for mean-field methods like Hartree-Fock.
+
+Despite their advantages, Monte Carlo methods face several challenges. The accuracy of QMC depends on the quality of the trial wavefunction, which often requires sophisticated forms to capture correlation effects. Additionally, the "fermion sign problem" in DMC, caused by the antisymmetric nature of the wavefunction, limits its efficiency for large systems or excited states. Computational costs, while favorable in scaling, can still be high due to the large number of samples required for statistical convergence.
+
+Monte Carlo methods continue to be a vital tool in quantum chemistry, enabling highly accurate simulations of ground-state energies, correlation effects, and thermodynamic properties. Their flexibility and scalability make them an essential complement to deterministic methods like Density Functional Theory and Hartree-Fock.
+
+\subsubsection{Machine Learning Approach}
+
+Lastly, another interesting emerging method was published in 2020 in a Nature article, proposing a machine-learning approach to solving time-independent Schr{\"o}dinger equations, which solves systems with up to 30 electrons. This emerging approach holds great promise for the future of quantum mechanics research. As noted in previous sections, modern quantum chemistry methods balance accuracy with associated computational costs. A common practice is representing wavefunctions by a Slater matrix, which contains a linear combination of Slater determinants. One of the ways to lessen the computational burden is to use stochastic methods, which sample those determinant spaces. The work by Choo et al. contains a suggestion that the use of neural networks may have the potential of reducing the number of required determinants.\cite{choo}
+
+The paper introduces PauliNet, a deep-learning-based quantum Monte Carlo ansatz designed to replace traditional, rigid functional forms like standard Jastrow factors and backflow transformations with more flexible, trainable neural networks to further Choo's idea. This approach directly incorporates well-established quantum-chemical principles -- such as multideterminant Slater expansions, Jastrow factors, backflow transformations, and proper electron-electron cusp conditions -- into the neural network architecture, ensuring physical validity and efficient, robust optimization. Demonstrations on various molecular systems show significantly improved accuracy over existing wavefunction methods, achieving high precision with orders of magnitude fewer determinants. With an asymptotic scaling of $O(N^4)$, the proposed framework is expected to handle much larger and more complex systems than current high-accuracy techniques, as evidenced by its successful calculation of the transition-state energy in a 28-electron cyclobutadiene molecule -— an achievement previously limited to highly specialized methods\cite{hermann_deep-neural-network_2020}.

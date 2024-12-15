@@ -1,21 +1,27 @@
 \section{Appendices}
+\subsection{Code}
+
+The code developed during this master thesis is available upon request. For access contact me directly via email at blaz.tez@gmail.com. The associated GitHub repository URL is \url{https://github.com/blazejtez/qc}.
 
 \subsection{Detailed proofs}
 \subsubsection{7-point stencil}
 Derivation begins with the Laplace operator:
 \begin{equation}
 	\Delta = \frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial z^2}
+	\label{eq1}
 \end{equation}
 The derivative can be approximated as a difference quotient of:
 \begin{equation}
 	\frac{df(x)}{dx} \approx \frac{f(x)-f(x-h)}{h}
+	\label{eq2}
 \end{equation}
 as well as a difference quotient from the other side:
 \begin{equation}
 	\frac{df(x+h)}{dx} \approx \frac{f(x+h)-f(x)}{h}
+	\label{eq3}
 \end{equation}
 where h is a grid spacing.
-To calculate the second derivative we use formula 3:
+To calculate the second derivative we use formula \ref{eq3}:
 \begin{equation}
 	\frac{d^2f(x)}{dx^2} = \frac{df(x)}{dx} \frac{df(x)}{dx} = \frac{d}{dx} \frac{f(x+h)-f(x)}{h}
 \end{equation}
@@ -24,14 +30,14 @@ To calculate the second derivative we use formula 3:
 	\frac{d}{dx} \frac{f(x+h)-f(x)}{h} = \frac{1}{h} \frac{d}{dx}(f(x+h)-f(x)) = \frac{1}{h} (\frac{df(x+h)}{dx} - \frac{df(x)}{dx})
 \end{equation}
 
-\noindent And thus we can substitute into equation formulas 2 and 3:
+\noindent And thus we can substitute into \ref{eq2} and \ref{eq3}:
 \begin{equation}
 	\frac{d^2f(x)}{dx^2} = \frac{1}{h} (\frac{f(x+h)-f(x)}{h} - \frac{f(x)-f(x-h)}{h}) = \frac{1}{h^2} (f(x+h)-f(x)-(f(x)-f(x-h))) 
 \end{equation}
 \begin{equation}
 	= \frac{1}{h^2} (f(x+h)-f(x)-f(x)+f(x-h)) = \frac{1}{h^2} (f(x+h)+f(x-h)-2f(x))
 \end{equation}
-Calculations for y and z will be similar. As long as h is the same in any dimension, we can substitute this into formula 1:
+Calculations for y and z will be similar. As long as h is the same in any dimension, we can substitute this into \ref{eq1}:
 \begin{equation}
 	\Delta = \frac{1}{h^2} (f(x+h)+f(x-h)-2f(x)) + \frac{1}{h^2} (f(y+h)+f(y-h)-2f(y)) + \frac{1}{h^2} (f(z+h)+f(z-h)-2f(z))
 \end{equation}
@@ -57,6 +63,7 @@ For point in space f(x,y,z), we derive 7-point stencil:
 	dx dy dz
 \end{equation}
 
+\noindent Substitute:
 
 \begin{align*} 
 	r^2 &=  x^2+y^2+z^2 \\ 
@@ -66,6 +73,8 @@ For point in space f(x,y,z), we derive 7-point stencil:
 	z &= r \cos{\theta} \\
 	J &= r^2 \sin{\theta}
 \end{align*}
+
+\noindent Leads to:
 
 \begin{multline}
 	\int_{0}^{+\infty} \int_{0}^{2\pi} \int_{0}^{\pi} 
@@ -83,6 +92,8 @@ For point in space f(x,y,z), we derive 7-point stencil:
 	d\phi d\theta d r
 \end{multline}
 
+\noindent Reducing:
+
 \begin{equation}
 	\int_{0}^{+\infty} \int_{0}^{2\pi} \int_{0}^{\pi} 
 	(r \sin{\theta} \cos{\phi})^{2k}
@@ -93,8 +104,7 @@ For point in space f(x,y,z), we derive 7-point stencil:
 	d\phi d\theta d r
 \end{equation}
 
-Rozbijam wyrażenie podcałkowe na 3 funkcje:
-
+\noindent Split the integrand into three functions:
 
 \begin{equation}
 	(r \sin{\theta} \cos{\phi})^{2k}
@@ -123,13 +133,13 @@ Rozbijam wyrażenie podcałkowe na 3 funkcje:
 	(\sin^{2(k+l)+1}{\theta}\cos^{2m}{\theta})
 	(\cos^{2k}{\phi}   \sin^{2l}{\phi} )
 \end{equation}
-Stąd:
+From which derives:
 \begin{equation}
 	\int_{0}^{+\infty} r^{2(k+l+m)+1} e^{-2p r^2} d r
 	\int_{0}^{2\pi} \sin^{2(k+l)+1}{\theta}\cos^{2m}{\theta} d\theta
 	\int_{0}^{\pi} \cos^{2k}{\phi}   \sin^{2l}{\phi} d\phi
 \end{equation}
-
+Which using Mathematica is calculated as equal to:
 \begin{multline}
 	\frac{\Gamma \left(k+\frac{1}{2}\right) \Gamma \left(l+\frac{1}{2}\right) \Gamma \left(m+\frac{1}{2}\right) 2^{-k-l-m-2} p^{-k-l-m-1} \Gamma (k+l+m+1)}{\Gamma\left(k+l+m+\frac{3}{2}\right)} \\
 \end{multline}
@@ -141,7 +151,7 @@ Stąd:
 	dx dy dz
 \end{equation}
 
-Uprośćmy wyrażenie podcałkowe:
+\noindent Simplify the integrand:
 \begin{equation}
 	x^k y^l z^m e^{-p (x^2+y^2+z^2)} \Delta x^k y^l z^m e^{-p(x^2+y^2+z^2)}
 \end{equation}
@@ -150,7 +160,7 @@ Uprośćmy wyrażenie podcałkowe:
 	(\frac{\partial^2}{\partial x^2} + \frac{\partial^2}{\partial y^2} + \frac{\partial^2}{\partial z^2})x^k y^l z^m e^{-p(x^2+y^2+z^2)}
 \end{equation}
 
-Rozbijam to na trzy wyrazy:
+\noindent Split the integrand into three functions:
 \begin{equation}
 	\frac{\partial^2}{\partial x^2} x^k y^l z^m e^{-p(x^2+y^2+z^2)}
 \end{equation}
@@ -163,7 +173,7 @@ Rozbijam to na trzy wyrazy:
 	\frac{\partial^2}{\partial z^2} x^k y^l z^m e^{-p(x^2+y^2+z^2)}
 \end{equation}
 
-A następnie liczę pierwszą podwójnej pochodną cząstkową:
+\noindent Next calculate first second-order partial derivative:
 
 \begin{equation}
 	\frac{\partial^2}{\partial x} x^k y^l z^m e^{-p(x^2+y^2+z^2)}
@@ -185,35 +195,33 @@ A następnie liczę pierwszą podwójnej pochodną cząstkową:
 	y^l z^m e^{-py^2}e^{-pz^2} \frac{\partial^2}{\partial x} x^k e^{-px^2}
 \end{equation}
 
-Wynik pierwszej podwójnej pochodnej cząstkowej:
-
+\noindent Which gives the value of first partial derivative:
 \begin{equation}
 	\frac{\partial^2\phi(x,y,z)}{\partial x^2} = y^l z^m e^{-py^2}e^{-pz^2}  \left(x^k (4 p^2 x^2 e^{-p x^2}-2 p e^{-p x^2})+(k-1) k x^{k-2} e^{-p x^2}-4 k p x^k e^{-p x^2}\right)
 \end{equation}
 
-Analogicznie dla drugiej podwójnej pochodnej cząstkowej otrzymujemy:
+\noindent Similarly, for the second mixed partial derivative, yields:
 
 \begin{equation}
 	x^k z^m e^{-px^2}e^{-pz^2} \frac{\partial^2}{\partial y^2} y^l e^{-py^2}
 \end{equation}
 
-Wynik drugiej podwójnej pochodnej cząstkowej:
-
+\noindent Which gives the value of second partial derivative:
 \begin{equation}
 	\frac{\partial^2\psi(y)}{\partial y^2} =  x^k z^m e^{-px^2}e^{-pz^2} \left( z^m (4 p^2 z^2 e^{-p z^2}-2 p e^{-p z^2})+(m-1) m z^{m-2} e^{-p z^2}-4 m p z^m e^{-p z^2} \right)
 \end{equation}
 
-Dla trzeciej:
+\noindent And the third yields:
 \begin{equation}
 	x^k y^l e^{-px^2}e^{-py^2} \frac{\partial^2}{\partial z^2} z^m e^{-pz^2}
 \end{equation}
 
-Wynik:
+\noindent The result obtained with Mathematica:
 \begin{equation}
 	\frac{\partial^2\psi(z)}{\partial z^2} = x^k y^l e^{-px^2}e^{-py^2} \left( y^l (4 p^2 y^2 e^{-p y^2}-2 p e^{-p y^2})+(l-1) l y^{l-2} e^{-p y^2}-4 l p y^l e^{-p y^2}\right)
 \end{equation}
 
-Dzięki temu działaniu, całkę możemy rozbić na sumę trzech całek.
+\noindent Now the integral can be split into a sum of three integrals:
 
 \begin{equation}
 	I_1 = \psi \frac{\partial^2\psi(x,y,z)}{\partial x^2}
@@ -239,8 +247,6 @@ Każda z nich była obliczana w analogiczny sposób:
 
 
 \subsubsection{Optimization of the normalization factor}
-%TODO TODO
-%TODO TODO
 The GTO basis function is equal:
 \begin{equation}
 	\text{GTO} = x^k y^l z^m e^{(-p(x^2 + y^2 + z^2))}

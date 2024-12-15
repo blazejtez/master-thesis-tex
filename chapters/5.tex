@@ -1,13 +1,79 @@
-\section{Conclusion (2 pages?)}
+\section{Conclusion}
 
 \subsection{Summary of results}
 
-TODO
+%Targets of this work that were achieved:
+%
+%- three Laplace' operators were implemented using finite difference methods, with 7-point, 19-point and 27-point stencil
+%
+%- the trial ansatz of hydrogen as in Kołos' book were discretized and implemented as CuPy functions successfully
+%
+%- a goal function class to provide functions that describe the current state of the wavefunction was developed successfully
+%
+%- the trial ansatz was used to prove the correctness of goal function classes
+%
+%- two minimizing algorithms: gradient descent, Adam were implemented
+%
+%- gradient descent and Adam correctness was proven using trial ansatz
+%
+%- ground state energies from random vector were obtained successfully using gradient descent and Adam
+%
+%- although Adam reproduced the values from random vector, the method took very long time, was prone to oscillations
+%
+%- implementation of PGD failed to bring results
+%
+%- LOBPCG CuPy implementetion was successfully applied to calculate 12 quantum states of hydrogen
+%
+%- for calculating the ground state of hydrogen, the fastest results were obtained using Adam, but the most gradient descent with low learning rate proved to be more precise
+%
+%- the best results for obtaining excited hydrogen states is LOBPCG with 27-point stencil
+
+In this work, several significant milestones were achieved in the numerical computation of hydrogen wavefunctions using the finite difference method (FDM). Three Laplace operators were successfully implemented using 7-point, 19-point, and 27-point stencils. These implementations provided increasingly accurate approximations of the Laplacian, critical for modeling the Hamiltonian operator in Schrödinger’s equation.
+
+The trial ansatz for the hydrogen wavefunction, as described in Kołos’ book, was discretized and implemented as CuPy functions. Additionally, a dedicated goal function class was developed to describe and evaluate the state of the wavefunction, providing the foundation for optimization algorithms. The correctness of this implementation was validated using the trial ansatz.
+
+Two optimization algorithms, gradient descent and Adam, were implemented to minimize Rayleigh's quotient and determine the ground state energy. Both algorithms were tested and confirmed to produce correct results using the trial ansatz. Using random initial wavefunctions, ground state energies were successfully obtained. However, while Adam reproduced the expected results, it was prone to oscillations and required significantly more computational time compared to gradient descent. For low learning rates, gradient descent proved more precise than Adam.
+
+The implementation of the Perturbed Gradient Descent (PGD) method did not yield successful results, primarily due to challenges in its implementation. In contrast, the Locally Optimal Block Preconditioned Conjugate Gradient (LOBPCG) method, implemented in CuPy, was successfully used to compute 12 quantum states of hydrogen. For excited states, LOBPCG coupled with the 27-point stencil yielded the best results. This highlights the method’s efficiency and precision for higher-energy states.
 
 \subsection{Conclusions and implications}
 
-TODO
+%- the implementations proved the theory was correct
+%
+%- finite difference method is well enough method for approximating Laplacian part of hamiltonian operator, to calculate the hydrogen states properly
+%
+%- current customer graphics card are capable not only of small educational tasks, such as Schr{\"o}dinger equation in 2D, but also bigger 3D systems, such as atom states
+%
+%- the calculations were done simultaneously on 12 wave functions each discretized on a cube with 80 bohr radius edge length. This means that systems of size about ~1000 bohr radius, or 51nm can be modelled using the same method and hardware.
+The outcomes of this study validate the theoretical basis for using FDM to approximate the Laplacian in quantum mechanical problems. The method accurately modeled the hydrogen wavefunction and its energy states, demonstrating the viability of GPU-based computations for solving Schrödinger's equation in 3D systems.
+
+This work also highlights the computational power of modern consumer-grade graphics cards. The calculations, performed simultaneously on 12 wavefunctions, each discretized on a cubic grid with an edge length of 80 Bohr radii, suggest that systems up to approximately 1000 Bohr radii (~51 nm) could be modeled with the same approach and hardware. These findings indicate that FDM can scale effectively to model larger quantum systems, bridging the gap between educational demonstrations and research-level applications.
 
 \subsection{Future work}
 
-TODO
+%- the hyperparameters of Adam require refining, and the algorithm itself might be improved
+%
+%- the PGD method might be a better solution than Adam, if the problems with implementation are overcomed
+%
+%- the goal function class might benefit from caching the results, thus reducing numerical complexity
+%
+%method can be further developed by:
+%
+%- adding a UI that is consistent with existing quantum chemistry packages
+%
+%- adding options as external potential
+%
+%- hamiltonian has to be checked for potential of optimization, especially space complexity
+%
+%- a C++/C CUDA implementation might provide even better results, especially the ability to decide when the memory is freed
+%
+%- current computers frequently have bigger RAM than GPU's VRAM, as well as faster than ever SSDs - there might be a space for improvement by storing some of the data on either of those spaces
+%
+%- calculations of helium atom and hydrogen molecule should be next steps in development of FDM methods for quantum chemistry
+Several avenues for future development arise from this research. The Adam optimizer, while functional, requires hyperparameter refinement to improve its efficiency and stability. Further improvements to the algorithm itself may reduce its susceptibility to oscillations. Additionally, addressing the implementation challenges in PGD could make it a viable alternative to Adam, particularly for systems requiring higher stability.
+
+The goal function class could benefit from caching intermediate results, potentially reducing numerical complexity and improving performance. Furthermore, integrating a user interface aligned with existing quantum chemistry packages would enhance usability. Adding features such as external potential options and optimizing the Hamiltonian's space complexity could make the framework more versatile and efficient.
+
+A dedicated C++/CUDA implementation may further enhance performance, particularly by providing more control over memory management. Given the disparity between system RAM and GPU VRAM in modern computers, and the increasing speed of SSDs, storing intermediate data in these memory spaces could improve scalability and efficiency.
+
+Finally, extending this method to more complex systems, such as the helium atom and the hydrogen molecule, is a natural progression. These steps would deepen the applicability of FDM in quantum chemistry and expand its role in computational physics research.

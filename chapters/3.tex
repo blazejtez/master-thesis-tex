@@ -84,9 +84,11 @@ The discretized expected value of the Hamiltonian is equal:
 
 \subsection{Laplacian}
 In order to discretize the Laplace operator, three separate methods were applied, one of which was a central difference scheme on a uniform structured mesh (CDS), as well as two high-order compact (HOC) finite difference schemes.\cite{spotz1996hoc}
-Because of built-in CUDA features, such as fast reading of neighboring memory addresses
-% < TODO cytowanie CUDA, akhtar>
-they need to be as compact as possible. Because of the many points used, the accuracy of such stencils varies from $O(h^2)$ for the 7-point stencil to $O(h^6)$ for the 27-point stencil. Since the precision of this approximation of the Laplace operator is a function of the grid step, this provides further motivation to calculate with as small a grid step as possible, utilizing as much VRAM as possible.
+To employ as highest ratio of cache hits to misses, they need to be as compact as possible. Because of the many points used, the accuracy of such stencils varies from $O(h^2)$ for the 7-point stencil to $O(h^6)$ for the 27-point stencil. Since the precision of this approximation of the Laplace operator is a function of the grid step, this provides further motivation to calculate with as small a grid step as possible, utilizing as much VRAM as possible. As noted by Krotkiewski, the general formula for $3 \times 3 \times 3$ stencil computation is\cite{krotkiewski2011efficient}:
+
+\begin{equation}
+	\hat{u}^K_{i,j,k} = \sum_{\hat{i}=-1}^{N-1}\sum_{\hat{j}=-1}^{N-1}\sum_{\hat{k}=-1}^{N-1}K_{\hat{i},\hat{j},\hat{k}} \cdot u_{i+\hat{i},j+\hat{j},k+\hat{k}}
+\end{equation}
 
 For example, in the case of the 7 points stencil, the discrete Laplace operator acting on a wavefunction can be written as:
 
@@ -128,28 +130,18 @@ The derivation of the formula for the 7-point stencil can be found in Appendix A
 	\end{subfigure}
 	\hfill
 	
-	\caption{CDS and HOC stencils described in William Spotz's dissertation. \cite{spotz1996hoc}}
+	\caption{CDS and HOC stencils described in Spotz's dissertation.\cite{spotz1996hoc}}
 	\label{fig:stencils}
 \end{figure}
 
-
-As Krotkiewski noted in his 2013 paper, those stencils are known as the general (non-separable) 3D convolution filters in computer graphics.\cite{krotkiewski2013efficient} 
-% str. 5 rownanie 4
-
-
-
-
 \subsection{Eigensolvers}
-%TODO
-Hereafter, and for the sake of simplicity, the sampled wavefunction flattened to a vector of N \times N \times N, \textbf{x} is defined to represent $\psi(x,y,z)$. What is left is calculating eigenvalues and eigenvectors using numerical methods. As stated before the time-independent Schr{\"o}dinger equation is:
+Hereafter, for the sake of simplicity, the sampled wavefunction flattened to a vector of $N \times N \times N$, \textbf{x} is defined to represent $\psi(x,y,z)$. What is left is calculating eigenvalues and eigenvectors using numerical methods. As stated before the time-independent Schr{\"o}dinger equation is:
 
 \begin{equation}
 	\hat{H} \psi(x,y,z) = E \psi(x,y,z)
 \end{equation}
 
-\noindent which is an eigenproblem,
-%TODO
-That is the transformation of wavefunction by Hamiltonian results in a scaled version. Because of discretization, the Hamiltonian can be treated as a matrix, and the wavefunction becomes a vector. To solve this for $E$, both sides of the equation are multiplied by $\psi^T(x,y,z).$
+\noindent which is an eigenproblem, that is the transformation of wavefunction by Hamiltonian results in wavefunction's version multiplied by scalar, which is eigenstate's energy. Because of discretization, the Hamiltonian can be treated as a matrix, and the wavefunction becomes a vector. To solve this for $E$, both sides of the equation are multiplied by $\psi^T(x,y,z).$
 
 \begin{equation}
 	\psi^T(x,y,z) \hat{H} \psi(x,y,z) = \psi^T(x,y,z) E \psi(x,y,z)
@@ -167,7 +159,7 @@ That is the transformation of wavefunction by Hamiltonian results in a scaled ve
 	E = \frac{\psi^T(x,y,z) \hat{H} \psi(x,y,z)}{\psi^T(x,y,z) \psi(x,y,z)}
 \end{equation}
 
-\noindent that is a Rayleigh's quotient, which is used in numerical calculations using computers since Vandergraft \cite{vandergraft1971} publication from 1971. Rayleigh's quotient can also be understood as a function that returns an eigenvalue when given a proper eigenvector.
+\noindent that is a Rayleigh's quotient, which is used in numerical calculations using computers since Vandergraft\cite{vandergraft1971} publication from 1971. Rayleigh's quotient can also be understood as a function that returns an eigenvalue when given an eigenvector.
 
 \begin{equation}
 	\lambda_i = R(\textbf{x}_i)
@@ -175,32 +167,31 @@ That is the transformation of wavefunction by Hamiltonian results in a scaled ve
 
 \noindent
 
-\subsubsection{Gradient descent}
-
-Iterative methods were employed to solve the aforementioned quotient. The most basic algorithm, used for such tasks is gradient descent.\cite{gradient_descent} The algorithm idea is to have an initial guess of what the eigenvector might be. If no such information exists, an uniform random vector should be used. Then, the gradient of Rayleigh's quotient should be calculated. Since the gradient points in the direction where the function grows the fastest, and the algorithm tries to minimize the value, the gradient for the current $\textbf{x}$ iteration is calculated, negated, and multiplied by the learning rate. Thus, the next value of $\textbf{x}_{i+1}$ is:
+\subsubsection{Gradient descent method}
+%TODO citing
+Iterative methods were employed to minimize the aforementioned quotient. The most basic algorithm, used for such tasks is gradient descent.\cite{gradient_descent} The algorithm idea is to have an initial guess of what the eigenvector might be. If no such information exists, an uniform random vector should be used. Then, the gradient of Rayleigh's quotient should be calculated. Since the gradient points in the direction where the function grows the fastest, and the algorithm tries to minimize the value, the gradient for the current $\textbf{x}$ iteration is calculated, negated, and multiplied by the learning rate. Thus, the next value of $\textbf{x}^{k+1}$ is:
 
 \begin{equation}
-	\textbf{x}_{i+1} = \textbf{x}_{i} - lr \cdot \nabla R(\textbf{x}_{i})
+	\textbf{x}^{k+1} = \textbf{x}^{k} - lr \cdot \nabla R(\textbf{x}^{k})
 \end{equation}
 
-\noindent, after which the check for convergence is made by checking if the L2 norm of the residue vector is greater than the assumed tolerance. Once the convergence criterion is satisfied or the maximum number of iterations is achieved, the procedure returns the eigenvalue and eigenvector. This algorithm enables the identification of the local minima of multivariate functions.
+\noindent after which the check for convergence is made by checking if the L2 norm of the residue vector is greater than the assumed small, positive tolerance. Once the convergence criterion is satisfied or the maximum number of iterations is achieved, the procedure returns the eigenvalue and eigenvector. This algorithm enables the identification of the local minima of multivariate functions.
 
 \subsubsection{Locally Optimal Block Preconditioned Conjugate Gradient}
-%TODO
-% Wikipedia, edit
-% Locally Optimal Block Preconditioned Conjugate Gradient (LOBPCG) is a matrix-free method for finding the largest eigenvalues and the corresponding eigenvectors of a symmetric positive definite generalized eigenvalue problem. \cite{knyazew2001} Even though it is described as matrix-free, many implementations, such as one found in PyTorch, demand matrix operators.
 
-Its implementations can be found in scientific modules such as SciPy \cite{scipy_lobpcg} and GPU-accelerated versions from PyTorch \cite{torch_lobpcg} and CuPyX \cite{cupy_lobpcg}.
+The Locally Optimal Block Preconditioned Conjugate Gradient (LOBPCG) method is an efficient and versatile algorithm for solving large-scale symmetric eigenvalue problems. It offers competitive computational costs and memory efficiency compared to the Lanczos method, particularly when computing a single extreme eigenpair. The method performs at least as well as gradient descent.\cite{knyazew2001} Its block-based approach facilitates the use of efficient matrix-matrix operations, making it well-suited for high-performance computing. LOBPCG is highly flexible, supporting variable preconditioning, including for non-symmetric or non-positive-definite cases, and allows warm starts by iteratively improving eigenvector approximations from previous iterations. Widely used in applications such as data clustering, image segmentation, and graph-based signal filtering, LOBPCG is easy to implement and has gained popularity in scientific computing. However, challenges such as increased computational costs for very large block sizes due to orthogonalizations and Rayleigh-Ritz computations highlight the importance of careful parameter selection for optimal performance.\cite{knyazew2017}
+
+Attempts were made to adapt the PyTorch implementation\cite{torch_lobpcg} for the thesis due to the computationally attractive "ortho" variant, which employs the LOBPCG method with orthogonal basis selection, described by Stathopoulos et al.\cite{stathopoulous2002}. Unfortunately, these efforts were unsuccessful due to differences between the Laplacian implementation and the input data requirements of the method. Consequently, the method available in the CuPy module was used instead.\cite{cupy_lobpcg}
 
 \subsubsection{Steepest descent with optimal step}
 %TODO
-ŹRÓDŁO \cite{pgd}
+This algorithm was implemented to calculate iteratively the excited states of hydrogen.The method was largely inspired by work of Jin et al, who worked on algorithm that escapes saddle points with logarithmic overhead. The Algorithm 2 presented in this article was implemented.\cite{pgd}
 
-The goal function is defined as
+To calculate excited states, the goal function is defined as
 \begin{equation}
-	\rho\left(\mathbf{x}, \bm{\lambda} \right) = \frac{\mathbf{x}^T\mathbf{A}\mathbf{x}}{\mathbf{x}^T\mathbf{x}} + \bm{\lambda}^T \mathbf{Y}^T \mathbf{x}, 
+	\rho\left(\mathbf{x}, \bm{\lambda} \right) = \frac{\mathbf{x}^T\mathbf{A}\mathbf{x}}{\mathbf{x}^T\mathbf{x}} + \bm{\lambda}^T \mathbf{Y}^T \mathbf{x}
 \end{equation}
-where $\mathbf{Y}\in\mathbb{R}^{d \times k}$ contains orthogonal vectors defining the subspace orthogonal to the sought solution and $\bm{\lambda}\in\mathbb{R}^k$ is the vector of Lagrange multipliers.
+\noindent where $\mathbf{Y}\in\mathbb{R}^{d \times k}$ contains orthogonal vectors defining the subspace orthogonal to the sought solution and $\bm{\lambda}\in\mathbb{R}^k$ is the vector of Lagrange multipliers.
 Thus, the gradients read
 \begin{equation}
 	\nabla_{\mathbf{x}}\rho\left(\mathbf{x},\bm{\lambda}\right) = \frac{2}{\mathbf{x}^T\mathbf{x}}\left(\mathbf{A}-\frac{\mathbf{x}^T\mathbf{A}\mathbf{x}}{\mathbf{x}^T\mathbf{x}}\right)\mathbf{x} + \mathbf{Y}\bm{\lambda},
@@ -212,8 +203,7 @@ The search direction for gradient descent is
 \begin{equation}
 	\mathbf{p}=-\left[\left(\nabla_{\mathbf{x}}\rho\left(\mathbf{x},\bm{\lambda}\right)\right)^T, \left(\nabla_{\bm{\lambda}}\rho\left(\mathbf{x},\bm{\lambda}\right)\right)^T\right]^T = \left[\mathbf{p}_{\mathbf{x}}^T,\mathbf{p}_{\bm{\lambda}}^T\right]^T.
 \end{equation}
-
-The goal as a function of the step size $\delta$ reads
+\noindent The goal as a function of the step size $\delta$ reads
 \begin{equation}
 	\rho\left(\mathbf{x}+\delta \mathbf{p}_{\mathbf{x}},\bm{\lambda}+\delta \mathbf{p}_{\bm{\lambda}}\right) = \frac{a_1+b_1\delta+c_1\delta^2}{a_2+b_2\delta+c_2\delta^2} + a_3+b_3\delta + c_3 \delta^2,
 	\label{eq5}
@@ -237,37 +227,46 @@ where the coefficients are:
 	q_4 &= c_2 (b_3 c_2 + 4 b_2 c_3),\\
 	q_5 &= 2 c_2^2 c_3.
 \end{align*}
+\noindent which facilitates the calculation of the optimal step size.
 
-which facilitates the calculation of the optimal step size.
+% ale ja liczę w całości gradienty, to jaki ma związek stochastyczny gradient
+\subsubsection{Stochastic gradient descent}
+
+Although not implemented in this work, stochastic gradient descent description is crucial for understanding the following minimizing algorithm, that is Adam. The idea comes from Robbins-Monroe\cite{robbins-monroe} algorithm of stochastic approximation. It's useful when dealing with high-dimensional problems, reducing the 
 
 \subsubsection{Adam}
-%TODO
 
-%\begin{aligned}
-%	m_w^{(t+1)} = \beta_1 m_w^{(t)} + (1 - \beta_1) \nabla_w L^{(t)} \\
-%	& v_w^{(t+1)} = \beta_2 v_w^{(t)} + (1 - \beta_2) (\nabla_w L^{(t)}) \\
-%	& \hat{m_w} = frac{m_w^{(t+1)}}{1-\beta_1^t} \\
-%	& \hat{v_w} = frac{v_w^{(t+1)}}{1-\beta_2^t} \\
-%	& w^{(t+1)} = w^{(t)} - \eta frac{\hat{m_w}}{\sqrt{\hat{v_w}} + \epsilon}
-%\end{aligne}
+Adam algorithm is a refinement of stochastic gradient descent (SGD) algorithm. The idea of
+Adam, derived from adaptive moment estimation, is a refinement of basic gradient descent algorithm. It characterizes itself by the adaptive learning rates using first and second moments of gradients, while still requiring only first-order gradients. It's also has low memory requirements. It combines two gradient descent methodologies, that is momentum and Root Mean Square Propagation (RMSP).
+
+
+
+\begin{align*}
+		&m_w^{(t+1)} = \beta_1 m_w^{(t)} + (1 - \beta_1) \nabla_w L^{(t)} \\
+		&v_w^{(t+1)} = \beta_2 v_w^{(t)} + (1 - \beta_2) (\nabla_w L^{(t)})^2 \\
+		&\hat{m_w} = \frac{m_w^{(t+1)}}{1-\beta_1^t} \\
+		&\hat{v_w} = \frac{v_w^{(t+1)}}{1-\beta_2^t} \\
+		&w^{(t+1)} = w^{(t)} - \eta \frac{\hat{m_w}}{\sqrt{\hat{v_w}} + \epsilon}
+\end{align*}
+
 \cite{kingma_adam:_2017}
+\cite{adam_geeks}
 
 \subsection{Tools and techniques}
 
 \subsubsection{Python}
 
-\cite{mayavi}
+The primary programming language used in this work was Python. This programming language is widely recognized as a programming language used by scientists and engineers. Moreover, the abundance of Python modules, such as NumPy, SciPy, MatPlotLib, etc., makes it an incredibly versatile language. Its high readability, simple syntax, and gentle learning curve allow STEM-related field practitioners to enter programming without delay.
 
+Python is a convenient tool for integrating many scientific and technical computing functionalities. The modules used, Mayavi and MatPlotLib for visualization, NumPy and CuPy for numerical computations, and direct access to CUDA via CuPy might not be available in other programming languages. Moreover, the vibrant community provides a steady flow of fixes and improvements, reference documentation, and many forums with resources and support that foster collaboration among researchers and developers.\cite{python}
 
 \subsubsection{CuPy}
 
-CuPy provides the functionality of NumPy and SciPy modules, offering GPU-accelerated computing with Python. It works on both Nvidia CUDA and AMD ROCm platforms. Its API is compatible with the aforementioned modules.\cite{cupy_overview}
-
-CuPy also provides an easy way of implementing custom kernel functions. For example - taken from "Learn CUDA":\cite{learn_cuda}
+CuPy provides the functionality of NumPy and SciPy modules, offering GPU-accelerated computing with Python. It works on both Nvidia CUDA and AMD ROCm platforms. Its API is compatible with the aforementioned modules.\cite{cupy_overview} CuPy also provides an easy way of implementing custom kernel functions. For example, in "Learn CUDA" book by Han et al., the ElemenwiseKernel, the simplest way of implementing CUDA kernel is described:\cite{learn_cuda}
 
 \vspace{0.2cm}
 \lstinputlisting[caption=Simple element-wise kernel, label=listing1, captionpos=b]{listings/3/listing1.py}
-takes two arguments, x and y and the return value is stored in the variable z.
+which takes two arguments, x and y, calculates it's squared difference. It is worth noting, values are not returned directly, instead a reference to a location where the result will be stored has to be provided, in this example, in variable z.
 
 Also it is possible to use raw kernel functions. Raw kernels are used when one wants to define a custom kernel that executes CUDA source code. Using raw kernels allows for control of grid size, block size, shared memory size, and stream. An example of the raw kernel from CuPy docs\cite{cupy_raw_kernel}:
 
@@ -280,8 +279,8 @@ Moreover, CuPy provided the TextureObject\cite{cupy_texture} and SurfaceObject\c
 \subsubsection{CUDA}
 
 In this work, we meet the case of data parallelism\cite{cheng2014professional}, which is a situation where calculation time might benefit when many data items are operated at the same time. The CUDA approach for such problems is to provide each thread with equal parts of data so that every thread can work on its part simultaneously.
-%TODO BERGMAN NOTED! change this paragraph
-An important issue with parallel computation has been raised by members of high performance computing (HPC) community. Krotkiewski noted, the \textit{flop to byte ratio} (F2B), defined as floating-point operations per second (FLOPs) divided by the available memory bandwith (in bytes per second) is a recognized challenge in high performance computing. It is especially important in algorithms that characterize in high memory utilization compared to the number of arithmetic instructions done. This puts pressure on scientists to design algorithms efficient not only from computational, but also space complexity.\cite{krotkiewski2013efficient}
+
+An important issue with parallel computation has been raised by members of high performance computing (HPC) community. Kogge et al. noted that rise of the \textit{flop to byte ratio} (F2B), defined as floating-point operations per second (FLOPS) divided by the available memory bandwith (in bytes per second) in hardware is a recognized challenge in high performance computing. Moreover, the development of dynamic random-access memory (DRAM) in recent years was a tradeoff of higher bandwith for lower latency.\cite{kogge2008exascale} It is especially important in algorithms that characterize in high memory utilization compared to the number of arithmetic instructions done and puts pressure on scientists to design algorithms efficient not only from computational, but also space complexity.\cite{krotkiewski2011efficient}
 
 \vspace{0.2cm}
 
@@ -304,23 +303,13 @@ An important issue with parallel computation has been raised by members of high 
 	\small \textit{Source}: Own elaboration based on techpowerup.com publications\cite{techpowerup1}\cite{techpowerup2}\cite{techpowerup3}
 \end{table}
 
-Since the publication of Krotkiewki's findings, the problem only was exacerbated. The NVIDIA Tesla C2050 mentioned in his article has half of F2P compared to it's current successor, NVIDIA RTX A4000. Moreover, the cards utilized in this work were characterized by even higher F2P, further highlighting the growing disparity between computational power and memory bandwidth.
-% tutaj wjezdza Akhtar i moja implementacja
+Since the publication of Krotkiewki's findings, the problem only was exacerbated. The NVIDIA Tesla C2050 mentioned in his article has half of F2P compared to it's current successor, NVIDIA RTX A4000. Moreover, the GPUs utilized in this work were characterized by even higher F2P, further highlighting the growing disparity between computational power and memory bandwidth.
+
+% TODO mogę tutaj opisać CUDA memory model, texturę i surface, jeżeli za mało treści
+
+Using aforementioned HOC stencils from Spotz dissertation\cite{spotz1996hoc}, there is high probability that produced code will be cache-friendly, since the memory reads are characterized by high locality, that is the adjacent values stored in memory are read. Still, in the case of cache miss, the algorithms implemented had to provide as low memory latency as possible. For that purpose, the findings of Akhtar et al. were employed. In his work on "Efficient Memory Access Patterns for Solving 3D Laplace Equation on GPU", he implemented 12 kernels with different with unique memory access pattern. In his publication, the best performing kernel achieved a speedup of 70 times with comparison to CPU code\cite{akhtar2018efficient}. The listing of this kernel is as follows:
+
 \vspace{0.2cm}
-\lstinputlisting[caption=Simple element-wise kernel, label=listing1, captionpos=b]{listings/3/listing1.py}
-takes two arguments, x and y and the return value is stored in the variable z.
+\lstinputlisting[caption=Listing of kernel K5 for solving Laplace 3D.\cite{akhtar2018efficient}, label=listing3, captionpos=b]{listings/3/listing3.py}
 
-CUDA offers 
-
-Raw kernels were written using the technique described by Akhtar et al.\cite{akhtar2018efficient}. and Krotkiewski \cite{krotkiewski2013efficient}
-
-
-% TODO opisać texturę i surface i guess
-% TODO opisać benchmark obliczenia numerycznego
-
-\cite{learn_cuda}
-\cite{cheng2014professional}
-
-
-
-
+Achieved results were attributed to efficient use of available memory spaces in GPU, best cache hit rate, which facilitated highest GPU throughput. The CuPy kernel function for Laplace operator in this work was done based on presented Akhtar's findings.
