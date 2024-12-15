@@ -6,11 +6,9 @@
 
 \vspace{3mm}
 
-Od momentu pojawienia się architektury Compute Unified Device Architecture (CUDA), badacze zyskali możliwość rozwiązywania w efektywniejszy sposób skomplikowanych obliczeniowo problemów, osiągając szybsze wyniki i większą dokładność numeryczną. Niniejszy projekt wpisuje się w ten trend, zawierając nową metodę obliczania stanu podstawowego i stanów wzbudzonych atomu wodoru z wykorzystaniem metody różnic skończonych. Implementację nowej metody i testy wykonano na konsumenckiej karcie graficznej o najwyższych możliwościach obliczeniowych w momencie publikacji, a mianowicie Nvidia RTX 4090.
+Od czasu wprowadzenia Compute Unified Device Architecture (CUDA) naukowcy zyskali możliwość rozwiązywania obliczeniowo trudnych problemów w bardziej efektywny sposób, co prowadzi do szybszych wyników i większej dokładności numerycznej. Niniejsza praca wpisuje się w ten trend, przedstawiając nowatorskie podejście do obliczania energii wodoru za pomocą równania Schrödingera i metody różnic skończonych. Dzięki uniknięciu konieczności explicite przechowywania macierzy operatora Hamiltona to podejście eliminuje złożoność pamięciową $O(x^6)$. Rozwiązanie zostało zaimplementowane i przetestowane na najlepszej konsumenckiej karcie graficznej dostępnej w 2024 roku, Nvidia RTX 4090.
 
-Większość projektu została opracowana w języku Python z wykorzystaniem biblioteki CuPy, z wyłączeniem fragmentów zaimplementowanych wprost w CUDA C.
-
-Ponadto w ramach tej pracy porównano algorytmy numeryczne służące do rozwiązywania problemu własnego równania Schr{\"o}dingera w celu optymalizacji minimalizacji ilorazu Rayleigha. Uzyskane funkcje falowe zostały zwizualizowane z wykorzystaniem mayavi - modułu z języka Python, a wyniki porównano z reprezentacjami graficznymi analitycznie wyprowadzonych funkcji falowych.
+Większość projektu została opracowana w języku Python z wykorzystaniem biblioteki CuPy, podczas gdy niektóre fragmenty zostały zaimplementowane w CUDA C. Praca obejmuje implementację kilku algorytmów numerycznych do rozwiązywania problemu własnego równania Schrödingera poprzez minimalizację ilorazu Rayleigha, a także wykorzystanie istniejącej implementacji algorytmu LOBPCG. Uzyskane funkcje falowe zostały zwizualizowane przy użyciu modułu Python Mayavi, a wyniki porównano z graficznymi reprezentacjami analitycznie wyprowadzonych funkcji falowych.
 
 \textbf{Słowa kluczowe:}: metoda różnic skończonych, równanie Schrödingera, atom wodoru.
 
