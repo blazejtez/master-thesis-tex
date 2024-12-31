@@ -28,13 +28,11 @@
 %
 %- the best results for obtaining excited hydrogen states is LOBPCG with 27-point stencil
 
-In this work, several significant milestones were achieved in the numerical computation of hydrogen wavefunctions using the finite difference method (FDM). Three Laplace operators were successfully implemented using 7-point, 19-point, and 27-point stencils. These implementations provided increasingly accurate approximations of the Laplacian, critical for modeling the Hamiltonian operator in Schrödinger’s equation.
+This work achieved several significant milestones in the numerical computation of hydrogen wavefunctions using the finite difference method (FDM). Three Laplace operators were successfully implemented using 7-point, 19-point, and 27-point stencils. These implementations provided accurate approximations of the Laplacian. The best results were achieved using a 19-point stencil.
 
-The trial ansatz for the hydrogen wavefunction, as described in Kołos’ book, was discretized and implemented as CuPy functions. Additionally, a dedicated goal function class was developed to describe and evaluate the state of the wavefunction, providing the foundation for optimization algorithms. The correctness of this implementation was validated using the trial ansatz.
+The trial \textit{ansatz} for the hydrogen wavefunction, as described in Kołos' book, was discretized and implemented as CuPy functions. A dedicated goal function class was developed to describe and evaluate the state of the wavefunction, providing the foundation for optimization algorithms. The correctness of this implementation was validated using the trial \textit{ansatz}.
 
-Two optimization algorithms, gradient descent and Adam, were implemented to minimize Rayleigh's quotient and determine the ground state energy. Both algorithms were tested and confirmed to produce correct results using the trial ansatz. Using random initial wavefunctions, ground state energies were successfully obtained. However, while Adam reproduced the expected results, it was prone to oscillations and required significantly more computational time compared to gradient descent. For low learning rates, gradient descent proved more precise than Adam.
-
-The implementation of the Perturbed Gradient Descent (PGD) method did not yield successful results, primarily due to challenges in its implementation. In contrast, the Locally Optimal Block Preconditioned Conjugate Gradient (LOBPCG) method, implemented in CuPy, was successfully used to compute 12 quantum states of hydrogen. For excited states, LOBPCG coupled with the 27-point stencil yielded the best results. This highlights the method’s efficiency and precision for higher-energy states.
+Two optimization algorithms, gradient descent, and Adam, were implemented to minimize Rayleigh's quotient and determine the ground state energy. Both algorithms were tested and confirmed to produce correct results using the trial \textit{ansatz}. Ground state energies were successfully obtained using random initial wavefunctions. For low learning rates, gradient descent proved to be more precise than Adam in calculating hydrogen ground energy, but for a price of lengthier convergence. Adam provided fastest convergence of hydrogen ground state. Adam reproduced the expected results of excited states of hydrogen, but it was prone to oscillations and required significantly more computational time than LOBPCG. Wavefunctions obtained with Adam showed significant deformations. First twelve hydrogen energies were calculated using LOBPCG.
 
 \subsection{Conclusions and implications}
 
@@ -45,9 +43,8 @@ The implementation of the Perturbed Gradient Descent (PGD) method did not yield 
 %- current customer graphics card are capable not only of small educational tasks, such as Schr{\"o}dinger equation in 2D, but also bigger 3D systems, such as atom states
 %
 %- the calculations were done simultaneously on 12 wave functions each discretized on a cube with 80 bohr radius edge length. This means that systems of size about ~1000 bohr radius, or 51nm can be modelled using the same method and hardware.
-The outcomes of this study validate the theoretical basis for using FDM to approximate the Laplacian in quantum mechanical problems. The method accurately modeled the hydrogen wavefunction and its energy states, demonstrating the viability of GPU-based computations for solving Schrödinger's equation in 3D systems.
 
-This work also highlights the computational power of modern consumer-grade graphics cards. The calculations, performed simultaneously on 12 wavefunctions, each discretized on a cubic grid with an edge length of 80 Bohr radii, suggest that systems up to approximately 1000 Bohr radii (~51 nm) could be modeled with the same approach and hardware. These findings indicate that FDM can scale effectively to model larger quantum systems, bridging the gap between educational demonstrations and research-level applications.
+The outcomes of this study validate the theoretical basis for using FDM to approximate the Laplacian in quantum mechanical problems. The method accurately modeled the hydrogen wavefunction and its energy states, demonstrating the viability of GPU-based computations for solving Schrödinger's equation in 3D systems.
 
 \subsection{Future work}
 
@@ -70,10 +67,10 @@ This work also highlights the computational power of modern consumer-grade graph
 %- current computers frequently have bigger RAM than GPU's VRAM, as well as faster than ever SSDs - there might be a space for improvement by storing some of the data on either of those spaces
 %
 %- calculations of helium atom and hydrogen molecule should be next steps in development of FDM methods for quantum chemistry
-Several avenues for future development arise from this research. The Adam optimizer, while functional, requires hyperparameter refinement to improve its efficiency and stability. Further improvements to the algorithm itself may reduce its susceptibility to oscillations. Additionally, addressing the implementation challenges in PGD could make it a viable alternative to Adam, particularly for systems requiring higher stability.
+The Adam optimizer, while functional, requires hyperparameter refinement to improve its efficiency and stability. Further improvements to the algorithm, especially convergence checks, may reduce its susceptibility to oscillations. Additionally, implementing a Perturbed Gradient Descent algorithm could make it a viable alternative to Adam, particularly for systems requiring higher numerical stability.
 
-The goal function class could benefit from caching intermediate results, potentially reducing numerical complexity and improving performance. Furthermore, integrating a user interface aligned with existing quantum chemistry packages would enhance usability. Adding features such as external potential options and optimizing the Hamiltonian's space complexity could make the framework more versatile and efficient.
+The goal function class could benefit from caching intermediate results, reducing numerical complexity and improving performance. Furthermore, integrating a user interface aligned with existing quantum chemistry packages would enhance usability. Adding features such as external potential options and optimizing the Hamiltonian's space complexity could make the framework more versatile and efficient.
 
-A dedicated C++/CUDA implementation may further enhance performance, particularly by providing more control over memory management. Given the disparity between system RAM and GPU VRAM in modern computers, and the increasing speed of SSDs, storing intermediate data in these memory spaces could improve scalability and efficiency.
+A dedicated C++/CUDA implementation may enhance performance by providing more control over memory management. Given the disparity between system RAM and GPU VRAM in modern computers and the increasing speed of SSDs, storing intermediate data in these memory spaces could improve scalability and efficiency.
 
-Finally, extending this method to more complex systems, such as the helium atom and the hydrogen molecule, is a natural progression. These steps would deepen the applicability of FDM in quantum chemistry and expand its role in computational physics research.
+Finally, extending this method to more complex systems, such as the helium atom and the hydrogen molecule, is a natural progression. These steps would deepen FDM's applicability in quantum chemistry and expand its role in computational physics research.

@@ -5,191 +5,358 @@
 
 \subsubsection{Hamiltonian}
 
- The listing for 7-point stencil is presented in Listing 4. The boundary conditions were implemented, such that the memory boundaries are explicitly set to zero.
+ The listing for 7-point stencil is presented in Listing 4. The boundary conditions were implemented to set the memory boundaries to zero explicitly. It utilizes the textures and surfaces as mentioned in Akhtar's article \cite{akhtar2018efficient}. Stencils of higher order were implemented in the same fashion. In Figure \ref{fig:laplacian}, a sample result of the Laplacian acting on $e^{-\sqrt{x^2+y^2+z^2)}}$ was presented.
 
 \vspace{0.2cm}
 \lstinputlisting[caption=Listing of Laplace operator., label=listing4, captionpos=b]{listings/4/listing4.py}
 
-The potential operator was also implemented in similar fashion, as presented in Listing 5. The singularity of $\frac{1}{r}$ was resolved through usage of parameter eps, which makes the potential values bounded above $\frac{1}{eps}$, reducing numerical error.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{pictures/4/wykres2.png}
+	\caption{Plot of the Laplacian operating on $e^{-\sqrt{x^2+y^2+z^2	}}$ projected into z-axis. Source: Own elaboration}
+	\label{fig:laplacian}
+\end{figure}
+
+The potential operator was also implemented utilizing efficient memory access patterns, as presented in Listing 5. The singularity of $\frac{1}{r}$ was resolved by introducing a parameter eps, which bounds the potential values above $\frac{1}{\sqrt{eps}}$, reducing numerical errors. The value of eps in this work was set to 100, limiting the potential to 10 a.u. This value was determined experimentally by searching for the optimal power of ten.
+\newpage
 
 \vspace{0.2cm}
 \lstinputlisting[caption=Listing of potential operator., label=listing5, captionpos=b]{listings/4/listing5.py}
 
-Both operators are utilized in Hamiltonian Python class, which provides the functionality of matvec() function, which operate with Hamiltonian on a vector, and matmat() which operates with Hamiltonian on a matrix. Those functions, as well as shape attribute are required to instantiate a CuPy Operator class with Hamiltonian.
+The result of implemented potential on a vector of one was presented in the Figure \ref{fig:potential}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{pictures/4/wykres1.png}
+	\caption{Plot showing the potential energy in X axis. Source: Own elaboration}
+	\label{fig:potential}
+\end{figure}
+
+Both operators are utilized in the Hamiltonian Python class, which provides the functionality of the matvec() function, which operates with Hamiltonian on a vector, and matmat(), which operates with Hamiltonian on a matrix. Those functions, as well as shape attribute are required to instantiate a CuPy Operator class with Hamiltonian. Methods pre() and post() are responsible for changing the mesh grid of shape $(N x N x N)$ to a vector of size $(N^3, 1)$.
+
 
 \vspace{0.2cm}
 \lstinputlisting[caption=Listing of Hamiltonian class., label=listing6, captionpos=b]{listings/4/listing6.py}
 
 
-\subsubsection{Goal function class}
+\subsubsection{Goal function and gradient class}
 
-The equations presented in section 3.4 are a general case for all calculations, which is why it was implemented as goal function class, with listing as follows:
+The equations presented in section 3.4 could be used as a general case for goal function. Thus, they were implemented as goal function class, with listing as follows:
 
 \vspace{0.2cm}
 \lstinputlisting[caption=Goal function class, label=listing7, captionpos=b]{listings/4/listing7.py}
 
+This separates the responsibilities of representing the state of a wavefunction from calculations made on it by minimizing algorithms and returns the values of gradient and objective function. GoalGradient has two dependencies: A stands for the Hamiltonian operator object, while Y is the matrix containing previous wavefunctions from previous calculations. Y should be set to None during the first energy value computation.
 
-This implementation is a way to separate the responsibilities of representing the state of wavefunction from calculations made on it by minimizing algorithms, and return the values of gradient and objective function. GoalGradient has two dependencies: A stands for the Hamiltonian operator object, while Y is the matrix containing previous wavefunctions from previous calculation. When it's the first value calculated, the Y should be set to None.
-
-The validation of both Hamiltonian operator as well as this GoalClass, according to the advice obtained during consultations with Dr. Syty and Prof. Sienkiewicz, was through inputting it with known wavefunction, which is described in Comparative analysis section.
+The validation of both the Hamiltonian operator as well as GoalGradient class, according to the advice obtained during consultations \cite{SytySienkiewicz}, was through inputting it with a known wavefunction, which is described in the Comparative Analysis section.
 
 \vspace{0.2cm}
 \lstinputlisting[caption=Exemplary wavefunction implementation, label=listing8, captionpos=b]{listings/4/listing8.py}
 
-Function creates an ansatz of proper extent (in hydrogen radiuses) with proper grid density, represented by parameter N.
+The function constructs an \textit{ansatz} with the appropriate spatial extent (in hydrogen radii) and grid density, defined by the parameter $N$. These parameters must match those of the Hamiltonian class to ensure proper functioning.
+
+\newpage
 
 \subsection{Minimizing algorithms implementations}
 \subsubsection{Gradient descent}
 
-Listing
+\vspace{0.2cm}
+\lstinputlisting[caption=Gradient descent function implementation, label=listing9, captionpos=b]{listings/4/listing9.py}
 
 \subsubsection{Adam}
 
-Listing
-
-\subsubsection{Perturbed gradient descent}
-
-Listing
-
-aaaa
-aaa
-a
-a
-aa
-
-aaaa
-a
-a
-aaaa
-
-aaaaaaaa
+\vspace{0.2cm}
+\lstinputlisting[caption=Adam function implementation, label=listing10, captionpos=b]{listings/4/listing10.py}
 
 \subsection{Comparative analysis}
 %% Compare the results of the new method with those of existing methods. Use graphs, tables, or figures to illustrate differences in performance, accuracy, or computational efficiency.
 
-
 \subsubsection{Hydrogen ground state validation}
 
-First step in validating the method was placing the known ansatz functions in gradient algorithms, to check whether they return correct values on first step. This proves, whether the Hamiltonian implementation and goal function class are correct. For ground state, the Listing \ref{listing8} was used. Other ansatz were implemented in the same fashion, according to formulas 2.1.1. Obtained results are presented in Table \ref{tab:stencil-comparison-ground-state-values}.
+The first step in validating the method was placing the known \textit{ansatz} functions in gradient algorithms to check whether they return correct values on the first step. This proves whether the Hamiltonian implementation and goal function class are correct. Wavefunction from the Listing \ref{listing8} was used for the ground state. Other \textit{ansatz} were implemented in the same fashion, according to formulas presented in Chapter 2.1. Table \ref{tab:stencil-comparison-ground-state-values} presents a summary of the obtained results.
 
-%TODO
 \begin{table}[!ht]
 	\centering
-	\caption{Comparison of stencils' obtained ground state energies of hydrogen. Analytically obtained value: -0.5}
+	\caption{Comparison ground state energies of hydrogen after first step. Analytically obtained value: -0.5}
 	\label{tab:stencil-comparison-ground-state-values}
 	\small % Adjust font size for the table
 	\begin{tabular}{|l|c|c|c|}
 		\hline
-		\textbf{Stencil type}    & \textbf{Gradient descent} & \textbf{Adam} & \textbf{LOBPCG} \\ \hline
-		7-point                  & 0.4                       & 0.4           & 7.15       \\ \hline
-		19-point                 & 0.4                       & 0.4           & 42.9       \\ \hline
-		27-point                 & 0.4                       & 0.4           & 0.4        \\ \hline
+		\textbf{Stencil type} & \textbf{Gradient descent} & \textbf{Adam} & \textbf{LOBPCG} \\ \hline
+		7-point               & -0.4954987                & -0.4941386    & -0.49549726 \\ \hline
+		19-point              & -0.4963384                & -0.4957334    & -0.49633817 \\ \hline
+		27-point              & -0.4963269                & -0.4956166    & -0.49632594 \\ \hline
 	\end{tabular}
 	
 	\smallskip
 	\small \textit{Source}: Own elaboration
 \end{table}
 
+This proves the objective function returns approximately correct results utilizing the Hamiltonian operator with implemented stencils. Next up, the methods were inputted with a random vector to check whether the algorithms converge to correct values of ground state energy, while the time and number of iterations for each Laplacian stencils were measured. Obtained results were summarized in Table \ref{tab:algorithm-comparison-ground-state}.
 
 \begin{table}[!ht]
 	\centering
-	\caption{Comparison of stencils' number of iterations}
-	\label{tab:stencil-comparison-ground-state-values}
-	\small % Adjust font size for the table
-	\begin{tabular}{|l|c|c|c|}
-		\hline
-		\textbf{Stencil type}    & \textbf{Gradient descent} & \textbf{Adam} & \textbf{LOBPCG} \\ \hline
-		7-point                  & 0.4                       & 0.4           & 7.15       \\ \hline
-		19-point                 & 0.4                       & 0.4           & 42.9       \\ \hline
-		27-point                 & 0.4                       & 0.4           & 0.4        \\ \hline
-	\end{tabular}
-	
-	\smallskip
-	\small \textit{Source}: Own elaboration
-\end{table}
-
-\begin{table}[!ht]
-	\centering
-	\caption{Comparison of stencils' time of calculations}
-	\label{tab:stencil-comparison-ground-state-values}
-	\small % Adjust font size for the table
-	\begin{tabular}{|l|c|c|c|}
-		\hline
-		\textbf{Stencil type}    & \textbf{Gradient descent} & \textbf{Adam} & \textbf{LOBPCG} \\ \hline
-		7-point                  & 0.4                       & 0.4           & 7.15       \\ \hline
-		19-point                 & 0.4                       & 0.4           & 42.9       \\ \hline
-		27-point                 & 0.4                       & 0.4           & 0.4        \\ \hline
-	\end{tabular}
-	
-	\smallskip
-	\small \textit{Source}: Own elaboration
-\end{table}
-
-\begin{table}[!ht]
-	\centering
-	\caption{Value, time and iterations of each algorithm with different stencil types}
-	\label{tab:stencil-comparison}
+	\caption{Value, time, and iterations of each algorithm with different stencil types}
+	\label{tab:algorithm-comparison-ground-state}
 	\small
-	\begin{tabular}{|l|ccc|ccc|ccc|}
-		\hline
-		\textbf{Stencil type} & \multicolumn{3}{c|}{\textbf{Gradient Descent}} & \multicolumn{3}{c|}{\textbf{Adam}} & \multicolumn{3}{c|}{\textbf{LOBPCG}} \\ \hline
-		& Value & Iterations & Time & Value & Iterations & Time & Value & Iterations & Time \\ \hline
-		7-point              & 0.4   & 100        & 1.2s & 0.4   & 80         & 1.0s & 7.15  & 20         & 0.8s \\ \hline
-		19-point             & 0.4   & 120        & 1.8s & 0.4   & 90         & 1.5s & 42.9  & 25         & 1.2s \\ \hline
-		27-point             & 0.4   & 110        & 1.5s & 0.4   & 85         & 1.2s & 0.4   & 15         & 0.6s \\ \hline
-	\end{tabular}
+	% Specify a width (e.g. \textwidth) and keep height as '!'
+	\resizebox{\textwidth}{!}{
+		\begin{tabular}{|l|ccc|ccc|ccc|}
+			\hline
+			& \multicolumn{3}{c|}{\textbf{Gradient descent}} 
+			& \multicolumn{3}{c|}{\textbf{Adam}} 
+			& \multicolumn{3}{c|}{\textbf{LOBPCG}} \\ 
+			& \multicolumn{3}{c|}{[$l_r=10^{-5}$, $tol=10^{-5}$]} 
+			& \multicolumn{3}{c|}{[$l_r=10^{-5}$, $tol=10^{-5}$]} 
+			& \multicolumn{3}{c|}{[$tol=10^{-5}$]} \\ \hline
+			\textbf{Stencil:} & \textit{Value} & \textit{Iterations} & \textit{Time} 
+			& \textit{Value} & \textit{Iterations} & \textit{Time} 
+			& \textit{Value} & \textit{Iterations} & \textit{Time} \\
+			\hline
+			7-point    & -0.49593 & 8431 & 775s & -0.49248 & 896 & 95s 
+			& -0.49600 & 1246 & 205s \\ \hline
+			19-point   & -0.49661 & 8422 & 755s & -0.49512 & 797 & 88s 
+			& -0.49667 & 712 & 116s \\ \hline
+			27-point   & -0.49661 & 8417 & 779s & -0.49485 & 813 & 88s 
+			& -0.49667 & 756 & 125s \\ \hline
+		\end{tabular}
+	}
 	\smallskip
 	\small \textit{Source}: Own elaboration
 \end{table}
 
-This proven, that objective function returns approximately correct results, utilizing the implemented Hamiltonian operator with implemented stencils. Next up, the methods were inputted with random vector, to check whether the algorithms converge to correct values, while the time and number of iterations for each Laplacian stencils was measured. All the methods implemented the same learning rate equal 1e-5.
-
-%wykresy zbiegania
-%obrazek porównujący wszystkie uzyskane orbitale z użyciem mayavi
 
 \subsubsection{Hydrogen excited states validation}
 
-After that, the analysis has been done, to check which algorithms perform the best in calculating excited states of hydrogen. 
+Once the algorithms' ability to calculate the ground state of hydrogen has been analyzed, the next step was to check which algorithms perform best in calculating excited states of hydrogen. Due to the long convergence time, this section did not test gradient descent. In all analyses, 19-point stencils were used. Moreover, due to the bigger orbitals calculated, the extent of the considered cube had to be raised to <-30,30> hydrogen radii, described with $301 \times 301 \times 301$ grid. Adam utilized learning rate of $10^{-5}$ for x gradient, while the learning rate for lambda has been set to $10^{-3}$, and tolerance $10^{-5}$, while LOBPCG was inputted with tolerance of $10^{-5}$. This setup calculated the first three energy values while measuring time and iterations. The values obtained are presented in Table \ref{tab:adam-excited}:
 
-% wykresy zbiegania
-% obrazek pokazujący orbitale uzyskane w trakcie analizy
+\begin{table}[!ht]
+	\centering
+	\caption{Excited hydrogen states calculated using Adam and LOBPCG}
+	\label{tab:adam-excited}
+	\small % Adjust font size for the table
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		\textbf{Expected result} & \textbf{LOBPCG} & \textbf{Adam} \\ \hline
+		-0.125              & -0.12524    & -0.12507 \\ \hline
+		-0.125              & -0.12524    & -0.06315 \\ \hline
+		-0.125              & -0.12514    & -0.11625 \\ \hline
+	\end{tabular}
+	\smallskip
+	
+	\small \textit{Source}: Own elaboration
+\end{table}
+
+Due to changes in grid size, LOBPCG calculating four values at once took less time than calculating ground state alone (just 88 seconds), while Adam sequentially calculated the values and needed more time - the whole calculation needed 2636 seconds and usually ended only once maximum iteration value of 10000 was reached. Moreover, the second value did not converge over the constrained space -- the second value, which later became a constraint, also most probably added an error to the third value. 
+
+Further investigation was done with Adam algorithm. The hyperparameter space of learning rate for $x$ and $\lambda$ was searched, and the results were presented in Table \ref{tab:hyperparameter-search}. The encountered problem was that with a too low a learning rate of $\lambda$ ($LR_\lambda$) compared to a learning rate of $x$ ($LR_x$) with each step, the constraint was largely ignored until reaching the ground state energy. On the other hand, too high values of ($LR_\lambda$) created oscillations, which made the convergence check unable to stop the algorithm. The only solution found yet, with both learning rates low enough, and correct values were reached after 30000 iterations (the whole calculation took 5449 seconds) due to maximum iteration check. The results for these parameters are summarized in Table \ref{tab:adam-optimized}.
+
+\renewcommand{\arraystretch}{1.5}
+\begin{table}[h]
+	\centering
+	\caption{Hyperparameter space search}
+	\label{tab:hyperparameter-search}
+	\small
+	\begin{tabular}{|c|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{3cm}|}
+		
+		\hline
+		\diagbox[dir=SE]{$LR_\lambda$}{$LR_x$} & $10^{-3}$ & $10^{-4}$ & $10^{-5}$  & $10^{-6}$\\ 
+		\hline
+		$10^{-2}$ & always converges to -0.5 & $\lambda$ oscillations prevent convergence  & $\lambda$ oscillations prevent convergence & $\lambda$ oscillations prevent convergence  \\ 
+		\hline
+		$10^{-3}$ & always converges to -0.5 & always converges to -0.5 & $\lambda$ oscillations prevent convergence & \textbf{correct results, long convergence}  \\ 
+		\hline
+		$10^{-4}$ & always converges to -0.5 & always converges to -0.5 & always converges to -0.5 & always converges to -0.5  \\ 
+		\hline
+	\end{tabular}
+	\smallskip
+	
+	\small \textit{Source}: Own elaboration
+\end{table}
 
 
-%from pyscf import gto, scf, tdscf
-%import time
+\begin{table}[!ht]
+	\centering
+	\caption{Adam with hyperparameters: $LR_\lambda=10^-3$, $LR_x = 10^-6$, $max-iter = 30000$}
+	\label{tab:adam-optimized}
+	\small % Adjust font size for the table
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		\textbf{Expected result} & \textbf{Adam}  \\ \hline
+		-0.125    & -0.11436 \\ \hline
+		-0.125      & -0.12496 \\ \hline
+		-0.125     & -0.12489 \\ \hline
+	\end{tabular}
+	\smallskip
+	
+	\small \textit{Source}: Own elaboration
+\end{table}
 
-%mol = gto.M(
-%atom='H 0 0 0',
-%basis='cc-pVDZ',
-%spin=1  # one electron system -> open shell
-%)
-
-%# Use UHF for open-shell
-%mf = scf.UHF(mol)
-
-%start_time = time.time()
-%hf_energy = mf.kernel()
-%end_time = time.time()
-%print("Ground-state HF energy:", hf_energy)
-%print("Ground-state calculation time: {:.6f} seconds".format(end_time - start_time))
-
-%mytd = tdscf.TDA(mf)  # This will create a UHF-TDA object automatically
-%start_time = time.time()
-%try:
-%excitation_energies, xy = mytd.kernel()
-%end_time = time.time()
-%print("Excited-state energies (in Hartree):", excitation_energies)
-%print("Excited-state calculation time: {:.6f} seconds".format(end_time - start_time))
-%except ValueError as e:
-%print("No excited states found or error occurred:", e)
-
-%converged SCF energy = -0.499278403419583  <S^2> = 0.75  2S+1 = 2
-Ground-state HF energy: -0.49927840341958285
-
-Ground-state calculation time: 0.018982 seconds
-
-No excited states found or error occurred: zero-size array to reduction operation maximum which has no identity
+LOBPCG was unable to calculate more than 12 eigenstates, their energies being largely close to expected. Further increasing the number was not feasible due to the larger space needed for the correct representation of higher-energy orbitals at the cost of precision, and it used up all VRAM of RTX 4090. The eigenvectors obtained during calculations were visualized using the Mayavi module, as presented in Figures \ref{fig:isosurfaces-cross-section} - \ref{fig:3-orbitals}.
 
 \subsection{Discussion of results}
-%% Analyze the results in detail, explaining why your method performs better (or not) under certain conditions.
-TODO
+
+The implementation of the Hamiltonian operator was proved to be correct. From the implemented stencils, the best values for ground state energy in the number of iterations, time, and precision of the results were obtained using a 19-point stencil. All the metrics of a 27-point stencil were close to those of a 19-point stencil but slightly worse. The 7-point stencil performed the worst of all methods to implement Laplacian. Most probably, the 19-point stencil's performance can be attributed to the way it balances the computational and memory read constraints of the GPU.
+
+During ground state calculations, the fastest converging algorithm in terms of iterations was LOBPCG, which converged in 712 iterations. One iteration of LOBPCG took longer than the iteration of Adam; thus, the fastest converging algorithm in terms of time was Adam utilizing a 19-point stencil, which converged in 88 seconds. The same time result was obtained for the 27-point stencil Adam implementation. The worst converging algorithm was gradient descent.
+
+Both Adam and LOBPCG correctly calculated the excited hydrogen states, although Adam needed more iterations and a more specific search of the hyperparameters. Overall, the first four eigenstates were calculated using Adam, and the first twelve using LOBPCG. The obtained wavefunctions upon visual inspection proved to be similar to the expected results, although wavefunctions obtained with Adam showed some deformation, especially the 2p orbitals.
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{pictures/4/a2sp.png}
+		\caption{2s orbital calculated with Adam, cross-section}
+		\label{fig:a2sp}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{pictures/4/l2sp.png}
+		\caption{2s orbital calculated with LOBPCG, cross-section}
+		\label{fig:l2sp}
+	\end{subfigure}
+	\hfill
+	
+	\bigskip
+	
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{pictures/4/l3sp.png}
+		\caption{3s orbital calculated with LOBPCG, cross-section}
+		\label{fig:l3sp}
+	\hfill
+	\end{subfigure}
+	\caption{Radial nodes visible in both Adam and LOBPCG calculated wavefunctions. Source: Own elaboration}
+	\label{fig:isosurfaces-cross-section}
+\end{figure} 
+
+\begin{figure}[ht!]
+	\centering
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{pictures/4/a1s.png}
+		\caption{1s orbital calculated with Adam}
+		\label{fig:a1s}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{pictures/4/a2s.png}
+		\caption{2s orbital calculated with Adam}
+		\label{fig:a2s}
+	\end{subfigure}
+	\hfill
+	
+	\bigskip
+	
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{pictures/4/a2p.png}
+		\caption{2p orbital calculated with Adam}
+		\label{fig:a2px}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{pictures/4/2pieczarka.png}
+		\caption{3s/2p hybrid orbital calculated with Adam}
+		\label{fig:a2p}
+	\end{subfigure}
+	\hfill
+	
+	\caption{Orbitals calculated with Adam, isosurface on 0.95 probability. Source: Own elaboration}
+	\label{fig:adam-isosurfaces}
+\end{figure} 
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{pictures/4/l1s.png}
+		\caption{1s orbital calculated with LOBPCG}
+		\label{fig:l1s}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{pictures/4/l2s.png}
+		\caption{2s orbital calculated with LOBPCG}
+		\label{fig:l2s}
+	\end{subfigure}
+	\hfill
+	
+	\bigskip
+	
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{pictures/4/l2p.png}
+		\caption{One of three 2p orbitals calculated with LOBPCG}
+		\label{fig:l2p}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{pictures/4/l2px.png}
+		\caption{One of three 2p orbitals calculated with LOBPCG}
+		\label{fig:l2px}
+	\end{subfigure}
+	\hfill
+	\caption{Isosurfaces of the N=1 and N=2 orbitals, calculated using the LOBPCG method, visualized at the 0.95 probability threshold. Source: Own elaboration}
+	\label{fig:1-2-orbitals}
+\end{figure} 
+
+\begin{figure}[t]
+	\centering
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{pictures/4/l3s.png}
+		\caption{3s orbital calculated with LOBPCG}
+		\label{fig:l3s}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{pictures/4/l3p.png}
+		\caption{One of three 3p orbitals calculated with LOBPCG}
+		\label{fig:l3p}
+	\end{subfigure}
+	\hfill
+	
+	\bigskip
+	
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{pictures/4/l3px.png}
+		\caption{One of three 3p orbitals calculated with LOBPCG}
+		\label{fig:l3px}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{pictures/4/l3pz.png}
+		\caption{One of three 3p orbitals calculated with LOBPCG}
+		\label{fig:l3pz}
+	\end{subfigure}
+	\hfill
+	
+	\bigskip
+	
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{pictures/4/l3d.png}
+		\caption{}
+		\label{fig:l3d}
+	\end{subfigure}
+	\hfill	
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{pictures/4/l3d3.png}
+		\caption{}
+		\label{fig:l3d3}
+	\end{subfigure}
+	\hfill	
+	\caption{Isosurfaces of the N=3 orbitals, calculated using the LOBPCG method, visualized at the 0.95 probability threshold. Source: Own elaboration}
+	\label{fig:3-orbitals}
+\end{figure} 
