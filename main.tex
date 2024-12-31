@@ -17,6 +17,9 @@
 \usepackage{fontspec} % Wymagane do ustawienia czcionki
 \setmainfont{Arial} % Czcionka (rodzaj)
 
+\usepackage{diagbox} % Required for diagonal splitting
+\usepackage{multirow} % required for multirow tables
+
 \usepackage[a4paper,
 top=2.5cm, 
 bottom=2.5cm, 
@@ -59,6 +62,9 @@ twoside]{geometry} % Marginesy lustrzane (2)
 % Wymagane do sformatowania tytułów rozdziałów - - - - - - - - - - - - - - - - - -
 
 \titlelabel{\thetitle.\quad} % Kropka po numerze tytułu (sub)sekcji
+
+%tabelki rozciagajace sie w pionie
+\renewcommand{\arraystretch}{1.5}
 
 % Wymagane do sformatowania spisu treści - - - - - - - - - - - - - - - - - -
 \usepackage{tocloft} % Niezbędny pakiet
@@ -191,7 +197,7 @@ sorting=none % Sortowanie według kolejności występowania
 	
 	\includepdf[pages=-, pagecommand={\thispagestyle{empty}}]{title_page.pdf}
 	
-%	\includepdf[pages=-, pagecommand={\thispagestyle{empty}}]{Oswiadczenie.pdf}
+	\includepdf[pages=-, pagecommand={\thispagestyle{empty}}]{declaration.pdf}
 	
 	\input{chapters/abstract}
 	\newpage
@@ -230,7 +236,7 @@ sorting=none % Sortowanie według kolejności występowania
 	
 	\newpage
 	\begin{singlespace} % Interlinia 1
-		\addcontentsline{toc}{section}{List of figures}
+		\addcontentsline{toc}{section}{List of Figures}
 		\renewcommand{\listfigurename}{List of Figures}
 		\listoffigures
 	\end{singlespace}
