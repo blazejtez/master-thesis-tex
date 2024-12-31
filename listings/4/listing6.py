@@ -5,29 +5,26 @@ class HamiltonianOperatorCuPy:
     def pre(self, v):
         v_cube = v.reshape((self.x_len, self.y_len, self.z_len))
 
-        tex_obj = self.t.texture_from_ndarray(v_cube)
+        tex_obj = self.TextureFactory.texture_from_ndarray(v_cube)
 
-        sur_obj = self.s.initial_surface()
+        sur_obj = self.SurfaceFactory.initial_surface()
 
         return tex_obj, sur_obj
 
     def post(self, sur_out):
-        v_out = self.s.get_data(sur_out)
+        v_out = self.SurfaceFactory.get_data(sur_out)
         v = cp.reshape(v_out, (self.x_len * self.y_len * self.z_len, 1),)
 
         return v
 
     def matvec(self, v: cp.ndarray):
         tex_obj, sur_obj = self.pre(v)
-        # v1 = self.potential.truncated_potential_3d()
         potential = self.potential.operate_cupy(tex_obj, sur_obj, self.x_linspace, self.y_linspace, self.z_linspace)
         v1 = self.post(potential)
 
         tex_obj, sur_obj = self.pre(v)
         laplacian = self.laplacian.matcube_cupy_27(tex_obj, sur_obj)
         v2 = self.post(laplacian)
-        # print("kinetic part: ", cp.sum(v1))
-        # print("potential part: ", cp.sum(v2))
         return -v1 - 0.5*v2
 
     def matmat(self, V: cp.ndarray) -> cp.ndarray:
